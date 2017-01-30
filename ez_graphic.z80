@@ -61,8 +61,7 @@ printend:
 
 xcoord: defb 0
 ycoord: defb 15
-udgs:   defb 60,126,219,153
-	defb 255,255,219,219
+udgs:   defb 219,189,189,255,255,24,60,102
 score:	defb 0
 
 line:   defb 'Score: ',13,'$'
