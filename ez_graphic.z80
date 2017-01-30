@@ -1,8 +1,17 @@
        	org 32768
 start: 
+	ld a, 2         ; channel 2 = "S" for screen, 2=upper screen
+        call $1601      ; Select print channel using ROM
+        ld hl,line      ; Print line
+        call printline
+
+	ld bc,(score)
+       	call 11563          ; stack number in bc.
+       	call 11747          ; display top of calc. stack.
+
 	ld hl,udgs	; UDGs.
        	ld (23675),hl   ; set up UDG system variable.
-       	ld a,2          ; 2 = upper screen.
+
        	call 5633       ; open channel.
        	ld a,21         ; row 21 = bottom of screen.
 	ld (xcoord),a   ; set initial x coordinate.
@@ -38,7 +47,22 @@ setxy:  ld a,22         ; ASCII control code for AT.
 	ld a,(ycoord)   ; y coordinate.
 	rst 16          ; print it.
 	ret
+
+printline:              ; Routine to print out a line
+        ld a,(hl)       ; Get character to print
+        cp '$'          ; See if it '$' terminator
+        jp z,printend   ; We're done if it is
+        rst 16          ; Spectrum: Print the character in 'A'
+        inc hl          ; Move onto the next character
+        jp printline    ; Loop round
+printend:
+        ret
+
+
 xcoord: defb 0
 ycoord: defb 15
 udgs:   defb 60,126,219,153
 	defb 255,255,219,219
+score:	defb 0
+
+line:   defb 'Score: ',13,'$'
