@@ -48,6 +48,26 @@ mushlp: ld a,22         ; control code for AT character.
        	rst 16          ; put mushroom on screen.
        	djnz mushlp     ; loop back until all mushrooms displayed.
 
+
+        exx
+        di
+        ld hl, $300
+        ld c, 0
+startsound:
+        ld b, 68
+delay1: djnz delay1
+        ld a, c
+        xor $10
+        ld c, a
+        out($f0), a
+        dec hl
+        ld a,l
+        or h
+        jr nz, startsound
+        ei
+        exx
+
+
 	; loop back from bottom
 	ld a,21         ; row 21 = bottom of screen.
 	ld (xcoord),a   ; set initial x coordinate.
