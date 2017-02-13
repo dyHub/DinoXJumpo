@@ -2,8 +2,8 @@
 start:
 	; print out score string
 	ld a, 2         ; channel 2 = "S" for screen, 2=upper screen
-  call $1601      ; Select print channel using ROM
-  ld hl,line      ; Print line
+        call $1601      ; Select print channel using ROM
+        ld hl,line      ; Print line
         call printline
 
 	; print out score number
