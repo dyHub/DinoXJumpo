@@ -29,7 +29,27 @@ loop:   call setxy      ; set up our x/y coords.
 	ld a,32         ; ASCII code for space.
 	rst 16          ; delete old asterisk.
 	call setxy      ; set up our x/y coords.
-	ld hl,xcoord    ; vertical position.
+
+  ld a, $FD       ; load byte 1111|1101 for keyboard read
+  in a, ($F0)     ; read from keyboard row 2 specifically to read if as are pressed
+  cpl             ; flips the bits in a do this because normally keyboard input is 1 if not pressed and 0 if pressed which is anti zero checks
+  and $1f         ; get the first 5 bits of a the keyboard input also sets the zero flag which cpl doesn't
+  jr z, skiplowerinput ; don't need to read what input is if its all zero
+  bit 5 , a       ;
+  jr z, noAinput  ;
+  bit 3, a        ;
+  jr nz, skiplowerinput; if a and d are pressed ignore input
+  ld b,a          ;
+  ld hl,ycoord    ; horizontal position.
+  dec (hl)        ;
+  ld a, (ycoord)  ;
+
+  jr skiplowerinput;
+noAinput:
+
+skiplowerinput:
+
+  ld hl, xcoord ;
 	dec (hl)        ; move it up one line.
 	ld a,(xcoord)   ; where is it now?
 	cp 255          ; past top of screen yet?
