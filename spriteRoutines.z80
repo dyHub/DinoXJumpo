@@ -1,26 +1,58 @@
        	org 32768
+        di
 
 ; an example of loading a character cell
-loop:
-        ld bc, $0c10    ; address (row = 12, col = 16)
-        call pixelAddr  ; gets the address in hl
+loop:   
+        ld hl, keyCell                  ; hl = key cell's address
+        ld (charCellAddress), hl        
 
-        ld d, h
-        ld e, l         ; copy pixel addr to de
+        ld hl, keyAttr
+        ld (attrByteAddress), hl
         
-        ld hl, graphic  ; set bc = to graphics address
+        ld hl, $0c10
+        ld (charCellCoord), hl
 
-        call copyCharCellToScreen
-
-        ld bc, $0c10    ; address (row = 12, col = 16)
-        call attrAddr   ; gets the address in hl
-
-        ld (hl), 6    ; attribute byte of 6. its a yellow key
-
+        call copyCharCellAndAttrByteToScreen
         jp loop
-    
-graphic: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
 
+
+
+keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
+keyAttr: defb 185                               ; yellow
+
+charCellAddress:    defb 0, 0
+attrByteAddress:    defb 0, 0
+charCellCoord:      defb 0, 0
+
+
+
+; ---------- function copyCharCellAndAttrByteToScreen  ------------------
+; Copies 8 bytes of consecutive character cell data to its screen address
+;
+; in: charCellAddress = 16 bit address of your 8x8 character cell to copy to screen
+; in: attrByteAddress = 16 bit address of your attribute byte to copy to screen
+; in: charCellCoord = 16 bit address of 2 bytes of (row, col) to put the character cell
+
+copyCharCellAndAttrByteToScreen:
+        ld bc, (charCellCoord)
+        call pixelAddr                  ; gets the address in hl
+
+        ex de, hl                       ; de = address. hl is now open
+
+        ld hl, (charCellAddress)
+        call copyCharCellToScreen
+        
+        ld bc, (charCellCoord)
+        call attrAddr                   ; gets the address in hl
+        
+        ex de, hl                       ; de = address. hl is now open
+        ld hl, attrByteAddress
+        ld b, (hl)                      ; b = the actual attribute byte
+
+        ex de, hl                       ; hl = attribute address now
+        ld (hl), 6                      ; attribute byte of 6. its a yellow key
+
+        ret
 
 
 ; ---------- function copyCharCellToScreen  ------------------
