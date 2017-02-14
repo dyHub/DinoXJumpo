@@ -1,0 +1,91 @@
+       	org 32768
+
+; an example of loading a character cell
+loop:
+        ld bc, $0c10    ; address (row = 12, col = 16)
+        call pixelAddr  ; gets the address in hl
+
+        ld d, h
+        ld e, l         ; copy pixel addr to de
+        
+        ld hl, graphic  ; set bc = to graphics address
+
+        call copyCharCellToScreen
+
+        ld bc, $0c10    ; address (row = 12, col = 16)
+        call attrAddr   ; gets the address in hl
+
+        ld (hl), 6    ; attribute byte of 6. its a yellow key
+
+        jp loop
+    
+graphic: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
+
+
+
+; ---------- function copyCharCellToScreen  ------------------
+; Copies 8 bytes of consecutive character cell data to its screen address
+;
+; in: HL = address of 1st of 8 consecutive src 8 bytes
+; in: DE = address of 1st of 8 pixel bytes to copy to  
+
+copyCharCellToScreen:
+        ld b, 8     ; how many bytes to copy
+nxtr:
+        ld a, (hl)
+        ld (de), a
+        inc hl
+        inc d       ; inc by 0x100
+        djnz nxtr
+
+        ret
+        
+; ---------- function pixelAddr  ------------------
+; Takes a character cell address and finds the address of the first pixel byte
+;
+; in: BC = (row, col) in character cell coordinates
+; out: HL = pixel byte for 1st row in cell
+
+pixelAddr:
+        ld a, b     ; b is in format [000 v7->v3]
+        and $18     ; now, a = [000 v7 v6 000]
+col:
+        add a, $40    
+        ld h, a     ; h = [010 v7 v6 000] (first line in character cell)
+row:
+        ld a, b     
+        and 7       ; a = [0000_0 v5 v4 v3] 
+        rrca        
+        rrca
+        rrca        ; a = [v5 v4 v3 0_0000]
+        add a, c
+        ld l, a     ; l = [v5 v4 v3 c7->c3]
+
+        ret
+
+; ---------- function attrAddr  ------------------
+; Given a character cell coordinate, find its attribute coordinate 
+;
+; in: BC = (row, col) in character cell coordinates
+; out: HL = addr byte for 1st row in cell
+;
+; trashes the d register
+
+attrAddr:
+        ld a, b     ; b is in format [000 v7->v3]
+        rrca
+        rrca
+        rrca        ; a is now [v5 v4 v3 0_00 v7 v6]
+        ld d, a     ; d is a copy of a for later
+        and $03     ; a is now [0000_00 v7 v6]
+        or $58      ; a is now [0101_10 v7 v6]
+        ld h, a     ; store in h
+
+        ld a, d     ; a is now [v5 v4 v3 0_00 v7 v6]
+        and $e0     ; a is now [v5 v4 v3 0_0000]
+        add c       ; a is now [v5 v4 v3 c7->c3]
+
+        ld l, a
+
+        ret
+

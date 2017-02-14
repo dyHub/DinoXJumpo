@@ -87,7 +87,7 @@ seed:   defw 0
 
 
 delay:  ld b,12         ; length of delay.
-	delay0: halt    ; wait for an interrupt.
+delay0: halt            ; wait for an interrupt.
 	djnz delay0     ; loop.
 	ret             ; return.
 setxy:  ld a,22         ; ASCII control code for AT.
