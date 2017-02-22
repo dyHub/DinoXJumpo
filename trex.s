@@ -1,88 +1,38 @@
 	org 32768
 	
 	di
-
+      	call 3503           ; ROM routine - clears screen, opens chan 2.
 ; an example of loading a character cell
-loop:
-        ld hl, trex1                  ; hl = key cell's address
-        ld (charCellAddress), hl
-
-        ld d, h
-        ld e, l         ; copy pixel addr to de
-
-        ;ld hl, graphic  ; set bc = to graphics address
-        ld hl, keyAttr
+drawTrex:        
+        ld hl, keyAttr		      ;set up attribute bytes
         ld (attrByteAddress), hl
 
-        ld hl, $0c10
-        ld (charCellCoord), hl
-
+	ld hl, trex1                  ; hl = key cell's address
+        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
+        ld hl, $0F00			; at the bottom right of the screen
+        ld (charCellCoord), hl		; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
 
 
 	ld hl, trex2                  ; hl = key cell's address
-        ld (charCellAddress), hl
-
-        ld d, h
-        ld e, l         ; copy pixel addr to de
-
-        ;ld hl, graphic  ; set bc = to graphics address
-        ld hl, keyAttr
-        ld (attrByteAddress), hl
-
-        ld hl, $0c11
-        ld (charCellCoord), hl
-
+        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
+        ld hl, $0F01		      ; at the bottom right of the screen
+        ld (charCellCoord), hl	      ; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
 
 
 	ld hl, trex3                  ; hl = key cell's address
-        ld (charCellAddress), hl
-
-        ld d, h
-        ld e, l         ; copy pixel addr to de
-
-        ;ld hl, graphic  ; set bc = to graphics address
-        ld hl, keyAttr
-        ld (attrByteAddress), hl
-
-        ld hl, $0d10
-        ld (charCellCoord), hl
-
+        ld (charCellAddress), hl      ; draw tne third cell (left bottom coner)
+        ld hl, $1000                  ; at the bottom right of the screen
+        ld (charCellCoord), hl        ; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
 
 
 	ld hl, trex4                  ; hl = key cell's address
-        ld (charCellAddress), hl
-
-        ld d, h
-        ld e, l         ; copy pixel addr to de
-
-        ;ld hl, graphic  ; set bc = to graphics address
-        ld hl, keyAttr
-        ld (attrByteAddress), hl
-
-        ld hl, $0d11
-        ld (charCellCoord), hl
-
+        ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
+        ld hl, $1001                  ; at the bottom right of the screen
+        ld (charCellCoord), hl        ; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
-
-        jp loop
-
-
-
-keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
-trex1: defb $00, $00, $00, $00, $00, $81, $83, $C7   
-trex2: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
-trex3: defb $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
-trex4: defb $F8, $E8, $E0, $C0, $80, $80, $80, $C0
-keyAttr: defb 185                               ; yellow
-
-charCellAddress:    defb 0, 0
-attrByteAddress:    defb 0, 0
-charCellCoord:      defb 0, 0
-
-
 
 ; ---------- function copyCharCellAndAttrByteToScreen  ------------------
 ; Copies 8 bytes of consecutive character cell data to its screen address
@@ -179,3 +129,15 @@ attrAddr:
 
         ret
 
+
+; Coordinates and addresses
+keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
+trex1: defb $00, $00, $00, $00, $00, $81, $83, $C7   
+trex2: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
+trex3: defb $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
+trex4: defb $F8, $E8, $E0, $C0, $80, $80, $80, $C0
+keyAttr: defb $6D                               ; yellow
+
+charCellAddress:    defb 0, 0
+attrByteAddress:    defb 0, 0
+charCellCoord:      defb 0, 0
