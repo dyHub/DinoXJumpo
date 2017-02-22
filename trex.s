@@ -30,7 +30,7 @@ loop:
         ld hl, keyAttr
         ld (attrByteAddress), hl
 
-        ld hl, $0c0F
+        ld hl, $0c11
         ld (charCellCoord), hl
 
         call copyCharCellAndAttrByteToScreen
@@ -62,7 +62,7 @@ loop:
         ld hl, keyAttr
         ld (attrByteAddress), hl
 
-        ld hl, $0d0F
+        ld hl, $0d11
         ld (charCellCoord), hl
 
         call copyCharCellAndAttrByteToScreen
@@ -72,10 +72,10 @@ loop:
 
 
 keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
-trex1: defb 0, 0, 0, 0, 0, 129, 193, 227   
-trex2: defb 126, 251, 255, 255, 15, 63, 7, 7 
-trex3: defb 255, 254, 252, 248, 176, 48, 16, 48
-trex4: defb 31, 23, 7, 3, 1, 1, 1, 3
+trex1: defb $00, $00, $00, $00, $00, $81, $83, $C7   
+trex2: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
+trex3: defb $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
+trex4: defb $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 keyAttr: defb 185                               ; yellow
 
 charCellAddress:    defb 0, 0
