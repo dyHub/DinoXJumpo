@@ -1,9 +1,12 @@
 	org 32768
 	
-	di
-      	call 3503           ; ROM routine - clears screen, opens chan 2.
+	;di
 ; an example of loading a character cell
 drawTrex:        
+      	call 3503           ; ROM routine - clears screen, opens chan 2.
+	halt
+	halt
+	halt
         ld hl, keyAttr		      ;set up attribute bytes
         ld (attrByteAddress), hl
 
@@ -33,6 +36,62 @@ drawTrex:
         ld hl, $1001                  ; at the bottom right of the screen
         ld (charCellCoord), hl        ; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
+
+mloop:  equ $
+
+	ld bc, 32766			; space key 
+	in a, (c)			; see if space key is pressed
+	rra				; outermost bit = key space
+	push af				; remember the value
+	call nc, trexJump		; it's being pressed, then jump t-rex
+	pop af
+
+	halt
+
+	jp mloop
+
+trexJump:
+
+	call 3503           ; ROM routine - clears screen, opens chan 2.
+	halt
+	halt
+	halt
+	ld hl, trex1                  ; hl = key cell's address
+        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
+        ld hl, $0C00			; at the bottom right of the screen
+        ld (charCellCoord), hl		; load the coordinate to draw cell
+        call copyCharCellAndAttrByteToScreen
+
+
+	ld hl, trex2                  ; hl = key cell's address
+        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
+        ld hl, $0C01		      ; at the bottom right of the screen
+        ld (charCellCoord), hl	      ; load the coordinate to draw cell
+        call copyCharCellAndAttrByteToScreen
+
+
+	ld hl, trex3                  ; hl = key cell's address
+        ld (charCellAddress), hl      ; draw tne third cell (left bottom coner)
+        ld hl, $0D00                  ; at the bottom right of the screen
+        ld (charCellCoord), hl        ; load the coordinate to draw cell
+        call copyCharCellAndAttrByteToScreen
+
+
+	ld hl, trex4                  ; hl = key cell's address
+        ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
+        ld hl, $0D01                  ; at the bottom right of the screen
+        ld (charCellCoord), hl        ; load the coordinate to draw cell
+        call copyCharCellAndAttrByteToScreen
+
+	halt
+	halt
+	halt
+
+	call drawTrex
+	ret
+
+	
+
 
 ; ---------- function copyCharCellAndAttrByteToScreen  ------------------
 ; Copies 8 bytes of consecutive character cell data to its screen address
