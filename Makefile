@@ -1,6 +1,6 @@
 
 %:
-	z80asm -o $@.bin $@.z80 
+	z80asm -o $@.bin $@.s
 	bin2tap -b -o $@.tap $@.bin
 	fuse $@.tap
     

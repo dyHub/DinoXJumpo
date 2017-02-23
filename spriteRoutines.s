@@ -1,15 +1,14 @@
        	org 32768
         di
 
-; an example of loading a character cell
-loop:
+; an example of loading a character cell and shifting it to the right 8 times!
+
         ld hl, keyCell                  ; hl = key cell's address
         ld (charCellAddress), hl
 
         ld d, h
-        ld e, l         ; copy pixel addr to de
+        ld e, l                         ; copy pixel addr to de
 
-        ld hl, graphic  ; set bc = to graphics address
         ld hl, keyAttr
         ld (attrByteAddress), hl
 
@@ -17,18 +16,89 @@ loop:
         ld (charCellCoord), hl
 
         call copyCharCellAndAttrByteToScreen
-        jp loop
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
+        ld bc, $0c10
+        call pixelAddr                  ; hl = pixel address of ($0c, $10)
+        call shiftCellRight
 
+        
+        halt
 
 
 keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
-keyAttr: defb 185                               ; yellow
+keyAttr: defb 6                                 ; yellow
 
 charCellAddress:    defb 0, 0
 attrByteAddress:    defb 0, 0
 charCellCoord:      defb 0, 0
 
 
+; ---------- function shiftCellRight ---------------
+; Shifts a cell one to the right. this makes no assumptions of attribute bytes in the cells - 
+; it simply shifts the pixel bytes
+;
+; in: HL = pixel address of cell to shift  (this gets trashed)
+;
+; trashes: HL and C
+;
+; example
+;             v         v
+; before: <abcdefgh><ijklmnop>
+;              v         v
+; after:  <xabcdefg><hijklmno>
+;
+; we set x in the first byte to the opposite of what it was before
+
+
+shiftCellRight:
+        
+        ld b, 8             ; loop for 8 pixel bytes
+scr_loop:
+                            ; 1. Shift the left pixel byte to the right
+        ld a, (hl)          ; get pixel byte into a
+        
+        ld c, a             ; save a into c - we will need to replicate bit 0 in the pixel cell to the right
+        srl a               ; shift a right
+        ld (hl), a          ; store shifted pixel byte back
+        
+                            ; 2. Shift the right pixel byte
+        inc l               ; get address of pixel byte one to the right
+        
+        ld a, (hl)          ; get pixel byte into a
+        srl a               ; shift it right
+
+        bit 0, c            ; bit 7 of a should be bit 0 of c (pixel cell to the left of current pixel cell)
+        set 7, a            ; a[7] = 1 (default)
+        jr nz, scr_setZeroEnd   ; if c[0] == 0
+        res 7, a                ;   a[7] = 0
+scr_setZeroEnd:
+        ld (hl), a          ; store shifted pixel byte back
+        
+        dec l               ; l--, now hl points to left pixel byte
+        inc h               ; h += 0x100 (makes hl point to the pixel byte one row down)
+        djnz scr_loop       
+
+        ret
 
 ; ---------- function copyCharCellAndAttrByteToScreen  ------------------
 ; Copies 8 bytes of consecutive character cell data to its screen address
@@ -36,7 +106,8 @@ charCellCoord:      defb 0, 0
 ; in: charCellAddress = 16 bit address of your 8x8 character cell to copy to screen
 ; in: attrByteAddress = 16 bit address of your attribute byte to copy to screen
 ; in: charCellCoord = 16 bit address of 2 bytes of (row, col) to put the character cell
->>>>>>> origin/master
+;
+; trashes: a, bc, de, hl 
 
 copyCharCellAndAttrByteToScreen:
         ld bc, (charCellCoord)
@@ -64,7 +135,9 @@ copyCharCellAndAttrByteToScreen:
 ; Copies 8 bytes of consecutive character cell data to its screen address
 ;
 ; in: HL = address of 1st of 8 consecutive src 8 bytes
-; out: DE = address of 1st of 8 pixel bytes to copy to
+; in: DE = address of 1st of 8 pixel bytes to copy to
+;
+; trashes: b, a, hl, d
 
 copyCharCellToScreen:
         ld b, 8     ; how many bytes to copy
@@ -82,6 +155,8 @@ nxtr:
 ;
 ; in: BC = (row, col) in character cell coordinates
 ; out: HL = pixel byte for 1st row in cell
+;
+; trashes: a
 
 pixelAddr:
         ld a, b     ; b is in format [000 v7->v3]
@@ -106,7 +181,7 @@ row:
 ; in: BC = (row, col) in character cell coordinates
 ; out: HL = addr byte for 1st row in cell
 ;
-; trashes the d register
+; trashes: d, a
 
 attrAddr:
         ld a, b     ; b is in format [000 v7->v3]
