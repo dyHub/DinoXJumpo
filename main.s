@@ -73,14 +73,14 @@ updateVideoRAM:
         ld hl, videoUpdateList
 videoUpdateListLoop:
 
-        ld e, (hl)                      ; e = char cell row
+        ld d, (hl)                      ; e = char cell row
 
-        ld a, e
+        ld a, d
         cp $ff
         jr z, videoUpdateListLoopEnd    ; if we found a delimiter byte, stop parsing the list
 
         inc hl                          
-        ld d, (hl)                      ; (e,d) = (row, col) for char cell
+        ld e, (hl)                      ; (e,d) = (row, col) for char cell
        	
         ld (charCellCoord), de		; load the coordinate to draw cell
 					; (keep in mind ZX Spectrum is little endian,
