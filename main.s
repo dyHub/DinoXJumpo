@@ -1,7 +1,6 @@
         org $8000
 
-        ;; shacham's hack 1 for installing interrupt handlers
-
+;; Install interrupt handler
 int_addr: equ $fdfd        
 
         di
@@ -27,10 +26,18 @@ int_addr: equ $fdfd
         ld i, a                                 ; set interrupt register
         
 	ei
-	ret	
 
-;; A routine called by the interrupt handler
-handler:
+
+;; Setup videoUpdateList by null terminating the updates
+setupVideoUpdateList:
+        ld a, $ff
+        ld (videoUpdateList), a
+
+;; Game loop
+include "trex.s"
+
+;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
+updateVideoRAM:
 	
         ;; save regs on stack
         push af             
@@ -38,15 +45,35 @@ handler:
         push hl
         push de
         push ix
-	;; loop through 3 bits of border color
-        ld a, (border)
-	inc a	
-	cp $10
-	jr nz, end_if_rst
-	ld a, 0
-end_if_rst:
-	out ($fe), a
-	ld (border), a
+
+	;; UPDATE VIDEO RAM BEFORE CRT GETS TO SCREEN
+        ld hl, videoUpdateList
+videoUpdateListLoop:
+        ld d, (hl)                      ; d = char cell row
+
+        ld a, d
+        cp $ff
+        jr z, videoUpdateListLoopEnd    ; if we found a delimiter byte, stop parsing the list
+
+        inc hl                          
+        ld e, (hl)                      ; e = char cell col
+        
+        ex de, hl                       ; hl = (row, col). de = ptr into videoUpdateList
+        ld (charCellCoord), hl		; load the coordinate to draw cell
+        
+        inc de
+        inc de                          ; de points to attribte byte now
+        ex de, hl                       ; hl = attr byte address, de = free
+        
+        ld (attrByteAddress), hl
+        inc hl
+        ld (charCellAddress), hl
+        
+        inc hl                          ; point to the next entry...
+
+        jp videoUpdateListLoop
+
+videoUpdateListLoopEnd:
     
         ;; restore regs from stack
         pop ix              
@@ -65,9 +92,15 @@ int_copy:
         org int_addr                            ;Set instruction counter to $fdfd (interrupt handler)
 
 int_start:
-	jp handler
+	jp updateVideoRAM
 int_end:
 	ld a,a
 
-;; Just a counter that loops through all 8 border colors
-border: defb 0
+
+;; address of the video update table of dynamic length. each entry in this table takes  the form:
+;; <char cell coord><attr byte><8 bytes of char cell>
+;; so each entry is 11 bytes
+;; the delimiter for this list is a single ff byte
+videoUpdateList: equ $a000
+
+
