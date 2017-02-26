@@ -34,12 +34,10 @@ setupVideoUpdateList:
         ld (videoUpdateList), a
 
 ;; Game loop
-include "trex.s"
 gameLoop:
 
         ld hl, videoUpdateList    ; hl is the address of where to add bytes to the update list
 
-        ld de, $0F00			; at the bottom right of the screen
         ld (hl), $0f
         inc hl
         ld (hl), $00                    ; copied the 2 bytes of coordinate to the list
@@ -49,13 +47,14 @@ gameLoop:
 
         inc hl
         ld de, trex1
-        ld (hl), d
+        ld (hl), e
         inc hl
-        ld (hl), e                      ; copied the char cell address, deep copy
+        ld (hl), d                      ; copied the char cell address, deep copy (little endian copy)
         inc hl
         
         ld (hl), $ff
-
+	
+	ei
         halt                            ; wait for interrupt to print our shit
 
         jp gameLoop
@@ -73,35 +72,36 @@ updateVideoRAM:
 	;; UPDATE VIDEO RAM BEFORE CRT GETS TO SCREEN
         ld hl, videoUpdateList
 videoUpdateListLoop:
-        ld d, (hl)                      ; d = char cell row
 
-        ld a, d
+        ld e, (hl)                      ; e = char cell row
+
+        ld a, e
         cp $ff
         jr z, videoUpdateListLoopEnd    ; if we found a delimiter byte, stop parsing the list
 
         inc hl                          
-        ld e, (hl)                      ; e = char cell col
-        
-        ex de, hl                       ; hl = (row, col). de = ptr into videoUpdateList
-        ld (charCellCoord), hl		; load the coordinate to draw cell
-        
-        inc de
-        inc de                          ; de points to attribute byte now
-        ex de, hl                       ; hl = attr byte address, de = free
+        ld d, (hl)                      ; (e,d) = (row, col) for char cell
+       	
+        ld (charCellCoord), de		; load the coordinate to draw cell
+					; (keep in mind ZX Spectrum is little endian,
+					; so this will show up in memory as (row, col) )
+
+	inc hl				; hl now points to attribute byte 
         
         ld (attrByteAddress), hl        ; load the attribute byte address
         inc hl
-
+	
         ld a, (hl)                      ; hl now points to char cell ptr, do a deep copy
-        ld (charCellAddress), a
+        ld (charCellAddress), a		; (keep in mind ZX Spectrum is little endian)
         inc hl
         ld a, (hl)
-        ld (charCellAddress+1), a
-       
-        call copyCharCellAndAttrByteToScreen 
+        ld (charCellAddress+1), a		
+	
+	push hl       				;save hl cus  the call will trash it
+        call copyCharCellAndAttrByteToScreen 	
+	pop hl					
 
-        inc hl                          
-        inc hl                          ; point to the next entry...
+        inc hl                          	; point to the next entry...
 
         jp videoUpdateListLoop
 
@@ -121,6 +121,20 @@ videoUpdateListLoopEnd:
         reti
         ret
 
+
+
+;; address of the video update table of dynamic length. each entry in this table takes  the form:
+;; <char cell coord> <attr byte> <char cell ptr>>
+;; so each entry is <2> <1> <2> = 5 bytes
+;; the delimiter for this list is a single ff byte
+videoUpdateList: equ $a000
+
+
+trex1: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
+include "spriteRoutines.s"
+
+
+
 ;; The actual interrupt handler - it just jumps to our routine
 ;; (that way, we only need to copy 3 bytes to $fdfd and won't overwrite stuff at $fe00 -> $feff)
 int_copy:
@@ -130,12 +144,4 @@ int_start:
 	jp updateVideoRAM
 int_end:
 	ld a,a
-
-
-;; address of the video update table of dynamic length. each entry in this table takes  the form:
-;; <char cell coord> <attr byte> <char cell ptr>>
-;; so each entry is <2> <1> <2> = 5 bytes
-;; the delimiter for this list is a single ff byte
-videoUpdateList: equ $a000
-
 
