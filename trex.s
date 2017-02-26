@@ -1,18 +1,30 @@
-
+        ret
 ; an example of loading a character cell
 drawTrex:        
       	call 3503           ; ROM routine - clears screen, opens chan 2.
-	halt
-	halt
-	halt
-        ld hl, keyAttr		      ;set up attribute bytes
-        ld (attrByteAddress), hl
+        
+        ld hl, videoUpdateList_local    ; hl is the address of where to add bytes to the update list
+
+        ld de, $0F00			; at the bottom right of the screen
+        ld (hl), $0f
+        inc hl
+        ld (hl), $00                    ; copied the 2 bytes of coordinate to the list
+
+        inc hl
+        ld (hl), $06                    ; copy a yellow attribute byte over
+
+        inc hl
+        ld de, trex1
+        ld (hl), d
+        inc hl
+        ld (hl), e                      ; copied the char cell address, deep copy
+        inc hl
+
 
 	ld hl, trex1                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
-        ld hl, $0F00			; at the bottom right of the screen
-        ld (charCellCoord), hl		; load the coordinate to draw cell
         call copyCharCellAndAttrByteToScreen
+        
 
 
 	ld hl, trex2                  ; hl = key cell's address
@@ -98,5 +110,9 @@ trex2: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
 trex3: defb $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
 trex4: defb $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 keyAttr: defb $6D                               ; yellow
+
+
+;; just a copy of the videoUpdateList address, simply to avoid duplicate definitions
+videoUpdateList_local: equ $a000
 
 include "spriteRoutines.s"

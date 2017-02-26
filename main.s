@@ -35,6 +35,30 @@ setupVideoUpdateList:
 
 ;; Game loop
 include "trex.s"
+gameLoop:
+
+        ld hl, videoUpdateList    ; hl is the address of where to add bytes to the update list
+
+        ld de, $0F00			; at the bottom right of the screen
+        ld (hl), $0f
+        inc hl
+        ld (hl), $00                    ; copied the 2 bytes of coordinate to the list
+
+        inc hl
+        ld (hl), $06                    ; copy a yellow attribute byte over
+
+        inc hl
+        ld de, trex1
+        ld (hl), d
+        inc hl
+        ld (hl), e                      ; copied the char cell address, deep copy
+        inc hl
+        
+        ld (hl), $ff
+
+        halt                            ; wait for interrupt to print our shit
+
+        jp gameLoop
 
 ;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
 updateVideoRAM:
@@ -62,19 +86,30 @@ videoUpdateListLoop:
         ld (charCellCoord), hl		; load the coordinate to draw cell
         
         inc de
-        inc de                          ; de points to attribte byte now
+        inc de                          ; de points to attribute byte now
         ex de, hl                       ; hl = attr byte address, de = free
         
-        ld (attrByteAddress), hl
+        ld (attrByteAddress), hl        ; load the attribute byte address
         inc hl
-        ld (charCellAddress), hl
-        
+
+        ld a, (hl)                      ; hl now points to char cell ptr, do a deep copy
+        ld (charCellAddress), a
+        inc hl
+        ld a, (hl)
+        ld (charCellAddress+1), a
+       
+        call copyCharCellAndAttrByteToScreen 
+
+        inc hl                          
         inc hl                          ; point to the next entry...
 
         jp videoUpdateListLoop
 
 videoUpdateListLoopEnd:
-    
+        
+        ;; null delimit the videoUpdateList
+        ld a, $ff
+        ld (videoUpdateList), a     
         ;; restore regs from stack
         pop ix              
         pop de
@@ -98,8 +133,8 @@ int_end:
 
 
 ;; address of the video update table of dynamic length. each entry in this table takes  the form:
-;; <char cell coord><attr byte><8 bytes of char cell>
-;; so each entry is 11 bytes
+;; <char cell coord> <attr byte> <char cell ptr>>
+;; so each entry is <2> <1> <2> = 5 bytes
 ;; the delimiter for this list is a single ff byte
 videoUpdateList: equ $a000
 
