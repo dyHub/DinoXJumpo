@@ -90,7 +90,7 @@ mloop:  equ $
 
 ; Move player left.
 
-mpl:    ld hl,ply           ; remember, y is the horizontal coord!
+mpl:   ld hl,ply           ; remember, y is the horizontal coord!
        ld a,(hl)           ; what's the current value?
        and a               ; is it zero?
        ret z               ; yes - we can't go any further left.

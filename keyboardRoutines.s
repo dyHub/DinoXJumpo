@@ -1,5 +1,3 @@
-org 32768
-
 
 ; ---------- function readWASD  ------------------
 ; Looks at whether the wasd keys are currently being held down

@@ -1,7 +1,7 @@
         org $8000
 
 ;; Install interrupt handler
-int_addr: equ $fdfd        
+int_addr: equ $fdfd
 
         di
         im 2
@@ -12,8 +12,8 @@ int_addr: equ $fdfd
         ld de,$fe01                             ;Destination = $fe01
         ld (hl),$fd                             ;Set first byte so it is copied to all of them ($fdfd)
         ld bc,257                               ;257 bytes (size of vector table)
-        ldir   
-        
+        ldir
+
 	;; 2. copy interrupt handler to address $fdfd
 
         ld hl,int_copy                          ;Source = interrupt routine
@@ -21,10 +21,10 @@ int_addr: equ $fdfd
         ld bc,int_end-int_start                 ;Length of custom interrupt routine
         ldir                                    ;(DE) <- (HL), BC=BC-1, Loop till B=0
 
-        
+
         ld a, $fe
         ld i, a                                 ; set interrupt register
-        
+
 	ei
 
 
@@ -38,9 +38,11 @@ gameLoop:
 
         ld hl, videoUpdateList    ; hl is the address of where to add bytes to the update list
 
-        ld (hl), $0f
+        ld d, (ply)
+        ld (hl), d
         inc hl
-        ld (hl), $00                    ; copied the 2 bytes of coordinate to the list
+        ld d, (plx)                    ; copied the 2 bytes of coordinate to the list
+        ld (hl), d
 
         inc hl
         ld (hl), $06                    ; copy a yellow attribute byte over
@@ -51,9 +53,14 @@ gameLoop:
         inc hl
         ld (hl), d                      ; copied the char cell address, deep copy (little endian copy)
         inc hl
-        
+
         ld (hl), $ff
-	
+
+        ;ld hl, (plx)
+        ;inc hl
+        ;ld (plx), hl
+
+
 	ei
         halt                            ; wait for interrupt to print our shit
 
@@ -61,9 +68,9 @@ gameLoop:
 
 ;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
 updateVideoRAM:
-	
+
         ;; save regs on stack
-        push af             
+        push af
         push bc
         push hl
         push de
@@ -79,39 +86,39 @@ videoUpdateListLoop:
         cp $ff
         jr z, videoUpdateListLoopEnd    ; if we found a delimiter byte, stop parsing the list
 
-        inc hl                          
+        inc hl
         ld e, (hl)                      ; (e,d) = (row, col) for char cell
-       	
+
         ld (charCellCoord), de		; load the coordinate to draw cell
 					; (keep in mind ZX Spectrum is little endian,
 					; so this will show up in memory as (row, col) )
 
-	inc hl				; hl now points to attribute byte 
-        
+	inc hl				; hl now points to attribute byte
+
         ld (attrByteAddress), hl        ; load the attribute byte address
         inc hl
-	
+
         ld a, (hl)                      ; hl now points to char cell ptr, do a deep copy
         ld (charCellAddress), a		; (keep in mind ZX Spectrum is little endian)
         inc hl
         ld a, (hl)
-        ld (charCellAddress+1), a		
-	
+        ld (charCellAddress+1), a
+
 	push hl       				;save hl cus  the call will trash it
-        call copyCharCellAndAttrByteToScreen 	
-	pop hl					
+        call copyCharCellAndAttrByteToScreen
+	pop hl
 
         inc hl                          	; point to the next entry...
 
         jp videoUpdateListLoop
 
 videoUpdateListLoopEnd:
-        
+
         ;; null delimit the videoUpdateList
         ld a, $ff
-        ld (videoUpdateList), a     
+        ld (videoUpdateList), a
         ;; restore regs from stack
-        pop ix              
+        pop ix
         pop de
         pop hl
         pop bc
@@ -130,9 +137,11 @@ videoUpdateListLoopEnd:
 videoUpdateList: equ $a000
 
 
-trex1: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
-include "spriteRoutines.s"
+trex1: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
+plx:    defb $00              ; player's x coordinate.
+ply:    defb $1F              ; player's y coordinate.
 
+include "spriteRoutines.s"
 
 
 ;; The actual interrupt handler - it just jumps to our routine
