@@ -10,3 +10,6 @@ make file
 ```
 
 Make sure to not include the .s
+
+
+You can read our progress reports in the Reports directory

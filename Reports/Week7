@@ -1,0 +1,14 @@
+
+We've drawn a 2x2 char cell t-rex sprite, and have been able to make him jump up and down (without the interrupt handler)
+Unfortunately, that means that the CRT beam splits the graphics when trying to make the T-Rex jump.
+
+
+But this week, we installed an interrupt handler that synchronizes with the top of the screen in order to solve this.
+We made a dynamic size linked list (with some limit of course) called an "video ram update list". On interrupt, we parse
+through this list to update some video Ram. Typically, in one frame, maybe you'll move a sprite up by 1 char cell. If the
+sprite is a single char cell, that means only two updates need to be done - one to remove the old sprite, and another to
+put the new sprite in the new location. This is pretty cost efficient and isn't too hard to interface with.
+
+Currently we are working on an interface to update the update list. Lets say you are moving a sprite up after pressing the keyboard.
+Then we need to add some updates to the update list. Then on the interrupt handler, the handler will parse the update list, and then
+set its size to 0 by null delimiting it with ff.
