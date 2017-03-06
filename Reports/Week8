@@ -1,0 +1,11 @@
+
+
+This week we got the interface for the update list to work pretty well. Now you can draw
+graphics pretty easily with this interface. 
+
+We have an example going that can make our 2x2 char cell trex jump. We are listening for I/O
+on the keyboard and when we see that the space is pressed, we remove the old trex, put a new 
+trex where it should jump, halt for a couple cycles, then remove the trex at it's jumped position
+to reset the state of everything.
+
+You can try it by running make main
