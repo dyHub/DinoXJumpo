@@ -33,27 +33,24 @@ setupVideoUpdateList:
         ld a, $ff
         ld (videoUpdateList), a
 
+	ld hl, videoUpdateList
+	ld (videoUpdateListCurr), hl		; set videoUpdateListCurr to point to beginning
+
 ;; Game loop
 gameLoop:
-
-        ld hl, videoUpdateList    ; hl is the address of where to add bytes to the update list
-
-        ld (hl), $0f
-        inc hl
-        ld (hl), $00                    ; copied the 2 bytes of coordinate to the list
-
-        inc hl
-        ld (hl), $06                    ; copy a yellow attribute byte over
-
-        inc hl
-        ld de, trex1
-        ld (hl), e
-        inc hl
-        ld (hl), d                      ; copied the char cell address, deep copy (little endian copy)
-        inc hl
-        
-        ld (hl), $ff
 	
+	ld a, $0f	
+	ld (charCellCoord), a		; 
+	ld a, $00
+	ld (charCellCoord+1), a		; set charCellCoord to (row = $0f, col = $00) 
+	
+	ld a, $06	
+	ld (attrByte), a		; set attrByte to yellow
+	
+	ld hl, trex1	
+	ld (charCellAddress), hl	; copy the char cell address, trash ass little endian style
+	call copyCharCellAndAttrByteToUpdateList
+
 	ei
         halt                            ; wait for interrupt to print our shit
 
@@ -107,6 +104,9 @@ videoUpdateListLoop:
 
 videoUpdateListLoopEnd:
         
+	ld hl, videoUpdateList
+	ld (videoUpdateListCurr), hl		; set videoUpdateListCurr to point to beginning
+
         ;; null delimit the videoUpdateList
         ld a, $ff
         ld (videoUpdateList), a     
@@ -123,13 +123,6 @@ videoUpdateListLoopEnd:
 
 
 
-;; address of the video update table of dynamic length. each entry in this table takes  the form:
-;; <char cell coord> <attr byte> <char cell ptr>>
-;; so each entry is <2> <1> <2> = 5 bytes
-;; the delimiter for this list is a single ff byte
-videoUpdateList: equ $a000
-
-
 trex1: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
 include "spriteRoutines.s"
 
@@ -143,5 +136,5 @@ int_copy:
 int_start:
 	jp updateVideoRAM
 int_end:
-	ld a,a
+	nop
 
