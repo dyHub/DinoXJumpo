@@ -1,57 +1,59 @@
-       	org 32768
-        di
-
-; an example of loading a character cell and shifting it to the right 8 times!
-
-        ld hl, keyCell                  ; hl = key cell's address
-        ld (charCellAddress), hl
-
-        ld d, h
-        ld e, l                         ; copy pixel addr to de
-
-        ld hl, keyAttr
-        ld (attrByteAddress), hl
-
-        ld hl, $0c10
-        ld (charCellCoord), hl
-
-        call copyCharCellAndAttrByteToScreen
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-        ld bc, $0c10
-        call pixelAddr                  ; hl = pixel address of ($0c, $10)
-        call shiftCellRight
-
-        
-        halt
-
-
-keyCell: defb 24, 16, 24, 16, 24, 36, 36, 24    ; this is a key sprite
-keyAttr: defb 6                                 ; yellow
-
 charCellAddress:    defb 0, 0
+attrByte:    	    defb 0
 attrByteAddress:    defb 0, 0
 charCellCoord:      defb 0, 0
 
+;; address of the video update table of dynamic length. each entry in this table takes  the form:
+;; <char cell coord> <attr byte> <char cell ptr>>
+;; so each entry is <2> <1> <2> = 5 bytes
+;; the delimiter for this list is a single ff byte
+videoUpdateList: equ $a000
+
+;; a pointer to the end of the list, right after the last element
+videoUpdateListCurr: defb 0, 0
+
+
+; ---------- function copyCharCellAndAttrByteToUpdateList ---------------
+; Adds an update to the video memory update list
+;
+; in: charCellAddress = 16 bit address of your 8x8 character cell to copy to screen
+; in: attrByte = 16 bit address of your attribute byte to copy to screen
+; in: charCellCoord = 16 bit address of 2 bytes of (row, col) to put the character cell
+;
+; trashes: a, bc, de, hl 
+
+copyCharCellAndAttrByteToUpdateList:
+	
+        ld hl, (videoUpdateListCurr)   	; hl is the address of where to add bytes to the update list
+	
+	ld de, charCellCoord	
+	ld a, (de)			; a = row
+	ld (hl), a	
+        inc hl
+	
+	inc de
+	ld a, (de)			; a = col
+        ld (hl), a 	                ; copied the 2 bytes of coordinate to the list
+
+        inc hl
+	ld a, (attrByte)		; a = attribute byte
+        ld (hl), a                      ; copy an attribute byte over
+	
+        inc hl				; make hl point to char cell pointer
+	
+	ld a, (charCellAddress)		; a = low byte of address
+	ld (hl), a	
+        inc hl
+
+	ld a, (charCellAddress+1)	; a = high byte of address 
+        ld (hl), a                      ; copied the char cell address, deep copy (little endian copy)
+        inc hl
+        
+        ld (hl), $ff
+
+	ld (videoUpdateListCurr), hl	; update the curr pointer to the end of the list (points to the ff byte)
+	
+	ret
 
 ; ---------- function shiftCellRight ---------------
 ; Shifts a cell one to the right. this makes no assumptions of attribute bytes in the cells - 

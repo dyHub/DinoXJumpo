@@ -31,9 +31,13 @@ int_addr: equ $fdfd
 
 ;; A routine called by the interrupt handler
 handler:
-        ex af,af'                               ;Exchange af with alternate register af'
-        exx                                     ;Exchange all other reg's with alternate reg's
 	
+        ;; save regs on stack
+        push af             
+        push bc
+        push hl
+        push de
+        push ix
 	;; loop through 3 bits of border color
         ld a, (border)
 	inc a	
@@ -43,9 +47,14 @@ handler:
 end_if_rst:
 	out ($fe), a
 	ld (border), a
-	
-        ex af,af'                               ;Exchange af with alternate register af'
-        exx                                     ;Exchange all other reg's with alternate reg's
+    
+        ;; restore regs from stack
+        pop ix              
+        pop de
+        pop hl
+        pop bc
+        pop af
+
 	ei
         reti
         ret
