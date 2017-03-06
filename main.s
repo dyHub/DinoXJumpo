@@ -37,24 +37,7 @@ setupVideoUpdateList:
 	ld (videoUpdateListCurr), hl		; set videoUpdateListCurr to point to beginning
 
 ;; Game loop
-gameLoop:
-	
-	ld a, $0f	
-	ld (charCellCoord), a		; 
-	ld a, $00
-	ld (charCellCoord+1), a		; set charCellCoord to (row = $0f, col = $00) 
-	
-	ld a, $06	
-	ld (attrByte), a		; set attrByte to yellow
-	
-	ld hl, trex1	
-	ld (charCellAddress), hl	; copy the char cell address, trash ass little endian style
-	call copyCharCellAndAttrByteToUpdateList
-
-	ei
-        halt                            ; wait for interrupt to print our shit
-
-        jp gameLoop
+include "gameLoop.s"
 
 ;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
 updateVideoRAM:
@@ -123,7 +106,6 @@ videoUpdateListLoopEnd:
 
 
 
-trex1: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
 include "spriteRoutines.s"
 
 
