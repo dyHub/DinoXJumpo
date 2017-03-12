@@ -124,7 +124,7 @@ copyCharCellAndAttrByteToScreen:
         call attrAddr                   ; gets the address in hl
 
         ex de, hl                       ; de = address. hl is now open
-        ld hl, attrByteAddress
+        ld hl, (attrByteAddress)
         ld b, (hl)                      ; b = the actual attribute byte
 
         ex de, hl                       ; hl = attribute address now
