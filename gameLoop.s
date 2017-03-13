@@ -2,6 +2,7 @@
 gameLoop:
 
 	call drawTrex
+	call drawCactus
 
 	ld bc, 32766			; space key 
 	in a, (c)			; see if space key is pressed
@@ -148,9 +149,12 @@ trexJump:
 
 	ret
 
+
+
 trex1: defb $00, $00, $00, $00, $00, $81, $83, $C7   
 trex2: defb $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0 
 trex3: defb $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
 trex4: defb $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 black: defb $00, $00, $00, $00, $00, $00, $00, $00
+
