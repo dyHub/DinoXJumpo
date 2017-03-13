@@ -1,3 +1,6 @@
+# Comment this out to use the other fuse
+#FUSE=$(which fuse)
+FUSE=/Applications/Fuse.app/Contents/MacOS/Fuse
 
 FUSE=/Users/yuhan/LocalDoc/UCSD/demo_prog/Fuse/Fuse.app/Contents/MacOS/Fuse
 %:

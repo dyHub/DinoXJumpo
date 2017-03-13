@@ -108,7 +108,7 @@ videoUpdateListLoopEnd:
 
 
 include "spriteRoutines.s"
-
+include "sprites.s"
 
 
 ;; The actual interrupt handler - it just jumps to our routine
