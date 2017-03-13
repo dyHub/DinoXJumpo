@@ -48,24 +48,20 @@ drawTrex:
 
 	ret
 
-;;drawCactus:
-;;
-;;  ld hl, cactus1                 ; hl = key cell's address
-;;  ld (charCellAddress), hl      ; draw tne first cell (upper part)
-;;  ld hl, (cactusRowCol)           ; draw
-;;  ld (charCellCoord), hl    ;
-;;  call copyCharCellAndAttrByteToUpdateList
+drawCactus:
+  ld hl, bigCactus1+ 3               ; hl = key cell's address
+  ld (charCellAddress), hl      ; draw tne first cell (upper part)
+  ld hl, (bigCactus1)
+  ld (charCellCoord), hl    ;
+  call copyCharCellAndAttrByteToUpdateList
 
-;;  ld hl, cactus2                ; hl = key cell's address
-;;  ld (charCellAddress), hl      ; draw tne first cell (lower part)
-;;  ld hl, (cactusRowCol)
-;;  ld a, l
-;;  add $1                      ; one row down from rest of cactus
-;;  ld l, a
-;;  ld (charCellCoord), hl    ; (row = 0F, col = 10)
-;;  call copyCharCellAndAttrByteToUpdateList
+  ld hl, bitCactus2+ 3                ; hl = key cell's address
+  ld (charCellAddress), hl      ; draw tne first cell (lower part)
+  ld hl, (bigCactus2)
+  ld (charCellCoord), hl    ; (row = 0F, col = 10)
+  call copyCharCellAndAttrByteToUpdateList
 
-;;  ret
+  ret
 
 trexJump:
 
