@@ -38,6 +38,7 @@ setupVideoUpdateList:
 
 ;; Game loop
 include "gameLoop.s"
+include "cactus.s"
 
 ;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
 updateVideoRAM:
