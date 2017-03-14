@@ -6,11 +6,11 @@
 ;; attr byte is a single attribute byte         = 1 byte
 ;;
 ;; char cell                                    = 8 bytes
-;; 
+;;
 ;; ---------
 ;; TOTAL                                        = 11 bytes
 
-;;---------------col row  attr  -----------sprite--------------------- 
+;;---------------col row  attr  -----------sprite---------------------
 trex1:      defb $00, $00, $06, $00, $00, $00, $00, $00, $81, $83, $C7
 trex2:      defb $00, $00, $06, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
 trex3:      defb $00, $00, $06, $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
