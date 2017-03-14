@@ -4,7 +4,7 @@ drawCactus:
         ld hl, bigCactus1+ 3                ; hl = key cell's address
         ld (charCellAddress), hl            ; draw tne first cell (upper part)
         ld hl, (bigCactus1)
-        ld (charCellCoord), hl    
+        ld (charCellCoord), hl
         ld hl, (bigCactus1+2)
         ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
@@ -12,7 +12,7 @@ drawCactus:
         ld hl, bigCactus2+ 3                ; hl = key cell's address
         ld (charCellAddress), hl            ; draw tne first cell (lower part)
         ld hl, (bigCactus2)
-        ld (charCellCoord), hl              
+        ld (charCellCoord), hl
         ld hl, (bigCactus2+2)
         ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
@@ -57,10 +57,10 @@ updateCactuses_update:
         ld hl, (bigCactus2)
         dec h
         ld (bigCactus2), hl
-        
+
         ;; draw!!
         call drawCactus
-        
+
         ;; 2b. check if it hits col $0
         ld hl, (bigCactus1)
         ld a, $00
@@ -70,7 +70,7 @@ updateCactuses_update:
         ld a, $20
         ld (bigCactus1+1), a
         ld (bigCactus2+1), a
-        
+
 updateCactuses_end:
         ret
 
@@ -83,61 +83,61 @@ drawCactus_temp:
         ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
         ld hl, $0810                  ; at the bottom right of the screen
         ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, bigTree1                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
 	ld hl, $090F
 	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, bigTree2                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw the second cell (right uper coner)
         ld hl, $0910		      ; at the bottom right of the screen
         ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, smallTree1                   ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne third cell (left bottom coner)
         ld hl, $1110                  ; at the bottom right of the screen
         ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 		ld hl, bigTree1                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
 	ld hl, $120F
 	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, bigTree2                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw the second cell (right uper coner)
         ld hl, $1210		      ; at the bottom right of the screen
         ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, smallTree2                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
         ld hl, $1310                  ; at the bottom right of the screen
         ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
-	
+	call copyCharCellAndAttrByteToUpdateList
+
 	ld hl, bigTree1                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
 	ld hl, $1A0F
 	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, bigTree2                  ; hl = key cell's address
         ld (charCellAddress), hl      ; draw the second cell (right uper coner)
         ld hl, $1A10		      ; at the bottom right of the screen
         ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList	
+	call copyCharCellAndAttrByteToUpdateList
 
 	ret
-	
+

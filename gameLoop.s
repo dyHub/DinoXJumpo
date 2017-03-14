@@ -27,6 +27,7 @@ gameLoop:
         ;; 2. Loop through all your sprites, and update them (hard coded logic for trex, cactus, etc...)
         call updateTrex
         call updateCactuses
+        call checkCollision
 
 	ei
         halt                            ; wait for interrupt to print our shit
@@ -36,5 +37,5 @@ gameLoop:
 
 include "trex.s"
 include "cactus.s"
-
+include "collision.s" ;; Remove this to enable no-clip
 
