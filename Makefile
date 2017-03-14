@@ -2,7 +2,7 @@
 #FUSE=$(which fuse)
 FUSE=/Applications/Fuse.app/Contents/MacOS/Fuse
 
-FUSE=/Users/yuhan/LocalDoc/UCSD/demo_prog/Fuse/Fuse.app/Contents/MacOS/Fuse
+#FUSE=/Users/yuhan/LocalDoc/UCSD/demo_prog/Fuse/Fuse.app/Contents/MacOS/Fuse
 %:
 	z80asm -o $@.bin $@.s 
 	bin2tap -b -o $@.tap $@.bin
