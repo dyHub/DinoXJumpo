@@ -5,12 +5,16 @@ drawCactus:
         ld (charCellAddress), hl            ; draw tne first cell (upper part)
         ld hl, (bigCactus1)
         ld (charCellCoord), hl    
+        ld hl, (bigCactus1+2)
+        ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
 
         ld hl, bigCactus2+ 3                ; hl = key cell's address
         ld (charCellAddress), hl            ; draw tne first cell (lower part)
         ld hl, (bigCactus2)
         ld (charCellCoord), hl              
+        ld hl, (bigCactus2+2)
+        ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
 
         ret

@@ -133,30 +133,37 @@ drawTrex:
 
 
 	ld hl, trex1+3                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
-	ld hl, (trex1)                  ; h = row, l = col
-
-	ld (charCellCoord), hl		; (row = 0F, col = 00)
+        ld (charCellAddress), hl        ; draw tne first cell (left uper coner)
+	ld hl, (trex1)                  ; h = col, l = row
+	ld (charCellCoord), hl		
+	ld hl, (trex1+2)                  
+	ld (attrByte), hl		
 	call copyCharCellAndAttrByteToUpdateList
 
 	ld hl, trex2+3                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
-        ld hl, (trex2)		      ; at the bottom right of the screen
-        ld (charCellCoord), hl	      ; load the coordinate to draw cell
+        ld (charCellAddress), hl        ; draw the second cell (right uper coner)
+        ld hl, (trex2)		        ; at the bottom right of the screen
+        ld (charCellCoord), hl	        ; load the coordinate to draw cell
+	ld hl, (trex2+2)                  
+	ld (attrByte), hl		
 	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, trex3+3                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne third cell (left bottom coner)
+        ld (charCellAddress), hl        ; draw tne third cell (left bottom coner)
         ld hl, (trex3)                  ; at the bottom right of the screen
-        ld (charCellCoord), hl        ; load the coordinate to draw cell
+        ld (charCellCoord), hl          ; load the coordinate to draw cell
+	ld hl, (trex3+2)                  
+	ld (attrByte), hl		
 	call copyCharCellAndAttrByteToUpdateList
 
 
 	ld hl, trex4+3                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
+        ld (charCellAddress), hl        ; draw tne forth cell (right bottom coner)
         ld hl, (trex4)                  ; at the bottom right of the screen
-        ld (charCellCoord), hl        ; load the coordinate to draw cell
+        ld (charCellCoord), hl          ; load the coordinate to draw cell
+	ld hl, (trex4+2)                  
+	ld (attrByte), hl		
 	call copyCharCellAndAttrByteToUpdateList
 
 	ret

@@ -128,7 +128,7 @@ copyCharCellAndAttrByteToScreen:
         ld b, (hl)                      ; b = the actual attribute byte
 
         ex de, hl                       ; hl = attribute address now
-        ld (hl), 6                      ; attribute byte of 6. its a yellow key
+        ld (hl), b                      ; attribute byte of 6. its a yellow key
 
         ret
 
