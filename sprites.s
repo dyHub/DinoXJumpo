@@ -14,10 +14,10 @@
 ;; TREX SPRITE
 ;;
 ;;---------------row col  attr  -----------sprite---------------------
-trex1:      defb $00, $00, $06, $00, $00, $00, $00, $00, $81, $83, $C7
-trex2:      defb $00, $00, $06, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
-trex3:      defb $00, $00, $06, $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
-trex4:      defb $00, $00, $06, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
+trex1:      defb $00, $00, 106, $00, $00, $00, $00, $00, $81, $83, $C7
+trex2:      defb $00, $00, 106, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
+trex3:      defb $00, $00, 106, $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
+trex4:      defb $00, $00, 106, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 ;; trex fields -
 ;; is_jumping   = if he's jumping (1) or not (0)
@@ -28,8 +28,8 @@ trex4:      defb $00, $00, $06, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 trex_is_jumping:    defb $00
 trex_up_or_down:    defb $00
-trex_jump_height:   defb $04
-trex_f:             defb $02
+trex_jump_height:   defb $06
+trex_f:             defb $03
 trex_f_ctr:         defb $00
 
 
@@ -42,11 +42,11 @@ smallTree2:     defb                 $18, $18, $5A, $5A, $7E, $18, $18, $18
 ;; TREE SPRITES
 ;;
 ;;    ---------------row col  attr  -----------sprite--------------------- 
-bigCactus1:     defb $0F, $0F, $04, $18, $18, $18, $18, $18, $1B, $1B, $DB
-bigCactus2:     defb $10, $0F, $04, $DF, $FF, $FF, $18, $18, $18, $18, $18
+bigCactus1:     defb $0F, $0F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB
+bigCactus2:     defb $10, $0F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18
 
-smallCacVar1:   defb $12, $10, $04, $18, $58, $58, $58, $7A, $1A, $1E, $DB
-smallCacVar2:   defb $13, $10, $04, $18, $18, $5A, $5A, $7E, $18, $18, $18
+smallCacVar1:   defb $12, $10, 108, $18, $58, $58, $58, $7A, $1A, $1E, $DB
+smallCacVar2:   defb $13, $10, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18
 
 ;; cactus fields
 ;; f        = frequency to update frame
@@ -54,5 +54,9 @@ smallCacVar2:   defb $13, $10, $04, $18, $18, $5A, $5A, $7E, $18, $18, $18
 cactus_f:       defb $01
 cactus_f_ctr:   defb $00
 
-;; general all 0 background sprite. does not have col row and attr
-black:          defb $00, $00, $00, $00, $00, $00, $00, $00
+
+;; GENERAL SPRITES WITH NO COORDINATES ATTACHED TO IT
+;;------------------attr  ----------sprite-----------------
+black:          defb $00, $00, $00, $00, $00, $00, $00, $00, $00
+sand:           defb $06, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
+sky:            defb $45, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
