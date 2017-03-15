@@ -55,8 +55,15 @@ cactus_f:       defb $01
 cactus_f_ctr:   defb $00
 
 
+;; CLOUD SPRITES
+;;                   row col  attr  ----sprite---------------------------
+cloud1:         defb $10, $02, 111, $06, $1F, $20, $40, $80, $80, $7F, $00
+cloud2:         defb $11, $02, 111, $00, $C0, $20, $18, $06, $08, $FC, $00 
+
+
+
 ;; GENERAL SPRITES WITH NO COORDINATES ATTACHED TO IT
-;;------------------attr  ----------sprite-----------------
+;;------------------attr  ----------sprite---------------------
 black:          defb $00, $00, $00, $00, $00, $00, $00, $00, $00
 sand:           defb $06, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
 sky:            defb $45, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF

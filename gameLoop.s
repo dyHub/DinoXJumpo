@@ -12,6 +12,7 @@
         ld (trex4), hl
 
         ;; 2. Init background drawing
+
         ;; sand
         ld hl, $1100                        ; h = row l = col
 init_loop_sand:
@@ -71,7 +72,25 @@ init_loop_sky_checkrow:
         jp init_loop_sky
 
 init_loop_sky_done:
+        
 
+        ;; clouds
+        ld hl, cloud1+3                      
+        ld (charCellAddress), hl           
+        ld hl, (cloud1)
+        ld (charCellCoord), hl
+        ld hl, cloud1+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+        ld hl, cloud2+3                      
+        ld (charCellAddress), hl           
+        ld hl, (cloud2)
+        ld (charCellCoord), hl
+        ld hl, cloud2+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+         
         ;; 3. draw inital trex and cactus
 	call drawTrex
 	call drawCactus
@@ -89,6 +108,7 @@ gameLoop:
         ;; 2. Loop through all your sprites, and update them (hard coded logic for trex, cactus, etc...)
         call updateTrex
         call updateCactuses
+        call checkCollision
 
 	ei
         halt                            ; wait for interrupt to print our shit
@@ -98,5 +118,5 @@ gameLoop:
 
 include "trex.s"
 include "cactus.s"
-
+include "collision.s" ;; Remove this to enable no-clip
 
