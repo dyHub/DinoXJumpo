@@ -14,20 +14,14 @@
 checkCollision:
 
     ld bc, (trex3)
+    ld d, b
+    ld b, c
+    ld c, d
     call attrAddr                   ; gets the address in hl
-    ld a, (hl)
-    ld hl, (trex3+2)
+    ld b, (hl)
+    ld a, (trex_color)
 
-    cp l
-
-    jp z , gameOver
-
-    ld bc, (trex3)
-    call attrAddr                   ; gets the address in hl
-    ld a, (hl)
-    ld hl, (trex3+2)
-
-    cp l
+    cp b
 
     jp z , gameOver
 

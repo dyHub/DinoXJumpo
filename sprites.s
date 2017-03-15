@@ -31,17 +31,16 @@ trex_up_or_down:    defb $00
 trex_jump_height:   defb $04
 trex_f:             defb $02
 trex_f_ctr:         defb $00
-
-
+trex_color:         defb $06
 
 bigTree1:       defb                 $18, $18, $18, $18, $18, $1B, $1B, $DB
 bigTree2:       defb                 $DF, $FF, $FF, $18, $18, $18, $18, $18
-smallTree1:     defb                 $18, $58, $58, $58, $7A, $1A, $1E, $18 
+smallTree1:     defb                 $18, $58, $58, $58, $7A, $1A, $1E, $18
 smallTree2:     defb                 $18, $18, $5A, $5A, $7E, $18, $18, $18
 
 ;; TREE SPRITES
 ;;
-;;    ---------------row col  attr  -----------sprite--------------------- 
+;;    ---------------row col  attr  -----------sprite---------------------
 bigCactus1:     defb $0F, $0F, $04, $18, $18, $18, $18, $18, $1B, $1B, $DB
 bigCactus2:     defb $10, $0F, $04, $DF, $FF, $FF, $18, $18, $18, $18, $18
 
