@@ -38,14 +38,18 @@ updateCactuses_noupdate:
 updateCactuses_update:
 
         ;; draw black on bigCactus1 and bigCactus2
-        ld hl, black
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (bigCactus1)                     ; h = col, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
 
-        ld hl, black
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (bigCactus2)                     ; h = col, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
@@ -66,8 +70,26 @@ updateCactuses_update:
         ld a, $00
         cp h                                ; is h (col) == 0?
         jr nz, updateCactuses_end
-        ;; 2b-1. if it hit left side
-        ld a, $20
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set coord to right side
+        ld a, $1f
         ld (bigCactus1+1), a
         ld (bigCactus2+1), a
 

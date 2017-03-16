@@ -32,15 +32,19 @@ updateTrex_update:
 
         ;; 2b-1. move up
 
-        ;; draw black on trex3 and trex4
-        ld hl, black
+        ;; draw sky on trex3 and trex4
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (trex3)                  ; h = col, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
 
-        ld hl, black
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (trex4)                  ; h = col, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
@@ -80,14 +84,18 @@ updateTrex_movedown:
         ;; 2b-2. move down
 
         ;; draw black on trex1 and trex2
-        ld hl, black
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (trex1)                  ; h = row, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
 
-        ld hl, black
+        ld hl, sky+1
         ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
         ld hl, (trex2)                  ; h = col, l = row
         ld (charCellCoord), hl)
 	call copyCharCellAndAttrByteToUpdateList
