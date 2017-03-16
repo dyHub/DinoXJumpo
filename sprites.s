@@ -41,18 +41,21 @@ smallTree2:     defb                 $18, $18, $5A, $5A, $7E, $18, $18, $18
 ;; TREE SPRITES
 ;;
 
-;;    ---------------row col  attr  -----------sprite---------------------
-bigCactus1:     defb $0F, $0F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB
-bigCactus2:     defb $10, $0F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18
+;;    ---------------row col  attr  -----------sprite--------------------- on/off
+;bigCactus1:     defb $0F, $0F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $01
+;bigCactus2:     defb $10, $0F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $01
 
 
-smallCacVar1:   defb $12, $10, 108, $18, $58, $58, $58, $7A, $1A, $1E, $DB
-smallCacVar2:   defb $13, $10, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18
+;bigCactus1:   defb $10, $0F, 108, $18, $58, $58, $58, $7A, $1A, $1E, $18, $00
+;bigCactus2:   defb $10, $10, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18, $00
+
+bigCactus1:   defb $0F, $0F, 108, $18, $58, $58, $58, $7A, $1A, $1E, $18, $00
+bigCactus2:   defb $10, $0F, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18, $00
 
 ;; cactus fields
 ;; f        = frequency to update frame
 ;; f_ctr    = current frame counter
-cactus_f:       defb $01
+cactus_f:       defb $02
 cactus_f_ctr:   defb $00
 
 
