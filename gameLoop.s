@@ -1,15 +1,15 @@
         ;; 1. Set trex1=$000F, trex2=$010F, trex3=$0010, trex4=$0110
-        ld hl, $030F                ; h = col, l = row
-        ld (trex1), hl
+        ;ld hl, $030F                ; h = col, l = row
+        ;ld (trex1), hl
 
-        ld hl, $040F
-        ld (trex2), hl
+        ;ld hl, $040F
+        ;ld (trex2), hl
 
-        ld hl, $0310
-        ld (trex3), hl
+        ;ld hl, $0310
+        ;ld (trex3), hl
 
-        ld hl, $0410
-        ld (trex4), hl
+        ;ld hl, $0410
+        ;ld (trex4), hl
 
         ;; 2. Init background drawing
 
@@ -93,7 +93,7 @@ init_loop_sky_done:
 
         ;; 3. draw inital trex and cactus
 	call drawTrex
-	call drawCactus
+	;call drawCactuses
         call drawScore
 
 gameLoop:

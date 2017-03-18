@@ -1,25 +1,429 @@
+;; function --------- drawCactusesAndCheckWallCollision------
+;;
+;;
+drawCactusesAndCheckWallCollision:
+        ;; Loop through each cactus, and if its on bit is set, then draw it
 
-drawCactus:
+        ld a, (bigCactus1_1+11)
+        cp 1                                ;                             
+        jp nz, drawCactus_2                 ; if we shouldnt draw cactus1, try cactus2
 
-        ld hl, bigCactus1+ 3                ; hl = key cell's address
+        ld hl, bigCactus1_1+ 3              ; hl = key cell's address
         ld (charCellAddress), hl            ; draw tne first cell (upper part)
-        ld hl, (bigCactus1)
+        ld hl, (bigCactus1_1)
         ld (charCellCoord), hl
-        ld hl, (bigCactus1+2)
+        ld hl, (bigCactus1_1+2)
         ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
 
-        ld hl, bigCactus2+ 3                ; hl = key cell's address
+        ld hl, bigCactus2_1+ 3              ; hl = key cell's address
         ld (charCellAddress), hl            ; draw tne first cell (lower part)
-        ld hl, (bigCactus2)
+        ld hl, (bigCactus2_1)
         ld (charCellCoord), hl
-        ld hl, (bigCactus2+2)
+        ld hl, (bigCactus2_1+2)
         ld (attrByte), hl
         call copyCharCellAndAttrByteToUpdateList
 
+        ;; check if collision with left side
+        ld hl, (bigCactus1_1)
+        ld a, $00
+        cp h                                ; is h (col) == 0?
+        jr nz, drawCactus_2
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_1)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_1)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set cactus to right position, and set it off
+        ld a, $1f
+        ld (bigCactus1_1+1), a
+        ld (bigCactus2_1+1), a
+
+        ;ld a, 0
+        ;ld (bigCactus1_1+11), a
+
+drawCactus_2:
+        ld a, (bigCactus1_2+11)
+        cp 1                                ;                             
+        jp nz, drawCactus_3                 ; if we shouldnt draw cactus2, try cactus3
+
+        ld hl, bigCactus1_2+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (upper part)
+        ld hl, (bigCactus1_2)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus1_2+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, bigCactus2_2+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (lower part)
+        ld hl, (bigCactus2_2)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus2_2+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ;; check if collision with left side
+        ld hl, (bigCactus1_2)
+        ld a, $00
+        cp h                                ; is h (col) == 0?
+        jr nz, drawCactus_3
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_2)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_2)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set cactus to right position, and set it off
+        ld a, $1f
+        ld (bigCactus1_2+1), a
+        ld (bigCactus2_2+1), a
+
+        ;ld a, 0
+        ;ld (bigCactus1_2+11), a
+
+drawCactus_3:
+        ld a, (bigCactus1_3+11)
+        cp 1                                ;                             
+        jp nz, drawCactus_4                 ; if we shouldnt draw cactus3, try cactus4
+
+        ld hl, bigCactus1_3+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (upper part)
+        ld hl, (bigCactus1_3)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus1_3+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, bigCactus2_3+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (lower part)
+        ld hl, (bigCactus2_3)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus2_3+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+        
+        ;; check if collision with left side
+        ld hl, (bigCactus1_3)
+        ld a, $00
+        cp h                                ; is h (col) == 0?
+        jr nz, drawCactus_4
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_3)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_3)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set cactus to right position, and set it off
+        ld a, $1f
+        ld (bigCactus1_3+1), a
+        ld (bigCactus2_3+1), a
+
+        ;ld a, 0
+        ;ld (bigCactus1_3+11), a
+drawCactus_4:
+        ld a, (bigCactus1_4+11)
+        cp 1                                ;                             
+        jp nz, drawCactus_5                 ; if we shouldnt draw cactus4, try cactus5
+
+        ld hl, bigCactus1_4+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (upper part)
+        ld hl, (bigCactus1_4)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus1_4+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, bigCactus2_4+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (lower part)
+        ld hl, (bigCactus2_4)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus2_4+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ;; check if collision with left side
+        ld hl, (bigCactus1_4)
+        ld a, $00
+        cp h                                ; is h (col) == 0?
+        jr nz, drawCactus_5
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_4)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_4)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set cactus to right position, and set it off
+        ld a, $1f
+        ld (bigCactus1_4+1), a
+        ld (bigCactus2_4+1), a
+
+        ;ld a, 0
+        ;ld (bigCactus1_4+11), a
+
+drawCactus_5:
+        ld a, (bigCactus1_5+11)
+        cp 1                                ;                             
+        jp nz, drawCactus_done              ; if we shouldnt draw cactus5, stop
+
+        ld hl, bigCactus1_5+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (upper part)
+        ld hl, (bigCactus1_5)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus1_5+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, bigCactus2_5+ 3              ; hl = key cell's address
+        ld (charCellAddress), hl            ; draw tne first cell (lower part)
+        ld hl, (bigCactus2_5)
+        ld (charCellCoord), hl
+        ld hl, (bigCactus2_5+2)
+        ld (attrByte), hl
+        call copyCharCellAndAttrByteToUpdateList
+
+        ;; check if collision with left side
+        ld hl, (bigCactus1_5)
+        ld a, $00
+        cp h                                ; is h (col) == 0?
+        jr nz, drawCactus_done
+        ;; 2b-1. if it hit left side, draw sky at old cactus 
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_5)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_5)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ;; then set cactus to right position, and set it off
+        ld a, $1f
+        ld (bigCactus1_5+1), a
+        ld (bigCactus2_5+1), a
+
+        ;ld a, 0
+        ;ld (bigCactus1_5+11), a
+
+drawCactus_done:
         ret
 
 
+;; function ----- drawSkyOnCactusesAndShift ------
+;;
+;; 
+drawSkyOnCactusesAndShift:
+        ;; Loop through each cactus, and if its on bit is set, then draw it
+
+        ld a, (bigCactus1_1+11)
+        cp 1                                ;                             
+        jp nz, skyAndShift_2                 ; if we shouldnt do cactus1, try cactus2
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_1)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_1)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, (bigCactus1_1)
+        dec h
+        ld (bigCactus1_1), hl
+        ld hl, (bigCactus2_1)
+        dec h
+        ld (bigCactus2_1), hl
+
+skyAndShift_2:
+        ld a, (bigCactus1_2+11)
+        cp 1                                ;                             
+        jp nz, skyAndShift_3                 ; if we shouldnt do cactus1, try cactus2
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_2)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_2)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, (bigCactus1_2)
+        dec h
+        ld (bigCactus1_2), hl
+        ld hl, (bigCactus2_2)
+        dec h
+        ld (bigCactus2_2), hl
+        
+skyAndShift_3:
+        ld a, (bigCactus1_3+11)
+        cp 1                                ;                             
+        jp nz, skyAndShift_4                 ; if we shouldnt do cactus1, try cactus2
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_3)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_3)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, (bigCactus1_3)
+        dec h
+        ld (bigCactus1_3), hl
+        ld hl, (bigCactus2_3)
+        dec h
+        ld (bigCactus2_3), hl
+
+
+skyAndShift_4:
+        ld a, (bigCactus1_4+11)
+        cp 1                                ;                             
+        jp nz, skyAndShift_5                 ; if we shouldnt do cactus1, try cactus2
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_4)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_4)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, (bigCactus1_4)
+        dec h
+        ld (bigCactus1_4), hl
+        ld hl, (bigCactus2_4)
+        dec h
+        ld (bigCactus2_4), hl
+
+
+skyAndShift_5:
+        ld a, (bigCactus1_5+11)
+        cp 1                                ;                             
+        jp nz, skyAndShift_done                 ; if we shouldnt do cactus1, try cactus2
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus1_5)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, sky+1
+        ld (charCellAddress), hl
+        ld hl, (sky)
+        ld (attrByte), hl
+        ld hl, (bigCactus2_5)                     ; h = col, l = row
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
+        ld hl, (bigCactus1_5)
+        dec h
+        ld (bigCactus1_5), hl
+        ld hl, (bigCactus2_5)
+        dec h
+        ld (bigCactus2_5), hl
+
+skyAndShift_done:
+        ret
+
+
+
+
+
+;; function ----- updateCactuses ---------
+;;
+;;
+;;
 updateCactuses:
         ld a, (cactus_f)
         ld b, a                         ; b = frame frequencey to update sprite
@@ -36,130 +440,17 @@ updateCactuses_noupdate:
 
         ;; 2a. Since frame counter == update frequency, then we need to move sprite
 updateCactuses_update:
-
-        ;; draw black on bigCactus1 and bigCactus2
-        ld hl, sky+1
-        ld (charCellAddress), hl
-        ld hl, (sky)
-        ld (attrByte), hl
-        ld hl, (bigCactus1)                     ; h = col, l = row
-        ld (charCellCoord), hl)
-	call copyCharCellAndAttrByteToUpdateList
-
-        ld hl, sky+1
-        ld (charCellAddress), hl
-        ld hl, (sky)
-        ld (attrByte), hl
-        ld hl, (bigCactus2)                     ; h = col, l = row
-        ld (charCellCoord), hl)
-	call copyCharCellAndAttrByteToUpdateList
-
-        ;; move all the sprite coords one col less (to the left of the screen)
-        ld hl, (bigCactus1)
-        dec h
-        ld (bigCactus1), hl
-        ld hl, (bigCactus2)
-        dec h
-        ld (bigCactus2), hl
-
+        
+        ;; For all cactuses that are on, draw sky in old position, and shift them by one
+        call drawSkyOnCactusesAndShift
         ;; draw!!
-        call drawCactus
+        call drawCactusesAndCheckWallCollision
 
         ;; 2b. check if it hits col $0
-        ld hl, (bigCactus1)
-        ld a, $00
-        cp h                                ; is h (col) == 0?
-        jr nz, updateCactuses_end
-        ;; 2b-1. if it hit left side, draw sky at old cactus 
-
-        ld hl, sky+1
-        ld (charCellAddress), hl
-        ld hl, (sky)
-        ld (attrByte), hl
-        ld hl, (bigCactus1)                     ; h = col, l = row
-        ld (charCellCoord), hl)
-	call copyCharCellAndAttrByteToUpdateList
-
-        ld hl, sky+1
-        ld (charCellAddress), hl
-        ld hl, (sky)
-        ld (attrByte), hl
-        ld hl, (bigCactus2)                     ; h = col, l = row
-        ld (charCellCoord), hl)
-	call copyCharCellAndAttrByteToUpdateList
-
-        ;; then set coord to right side
-        ld a, $1f
-        ld (bigCactus1+1), a
-        ld (bigCactus2+1), a
 
 updateCactuses_end:
         ret
 
 
-
-
-drawCactus_temp:
-
-	ld hl, smallTree1                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
-        ld hl, $0810                  ; at the bottom right of the screen
-        ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, bigTree1                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
-	ld hl, $090F
-	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, bigTree2                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
-        ld hl, $0910		      ; at the bottom right of the screen
-        ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, smallTree1                   ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne third cell (left bottom coner)
-        ld hl, $1110                  ; at the bottom right of the screen
-        ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-		ld hl, bigTree1                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
-	ld hl, $120F
-	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, bigTree2                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
-        ld hl, $1210		      ; at the bottom right of the screen
-        ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, smallTree2                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne forth cell (right bottom coner)
-        ld hl, $1310                  ; at the bottom right of the screen
-        ld (charCellCoord), hl        ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, bigTree1                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw tne first cell (left uper coner)
-	ld hl, $1A0F
-	ld (charCellCoord), hl		; (row = 0F, col = 00)
-	call copyCharCellAndAttrByteToUpdateList
-
-
-	ld hl, bigTree2                  ; hl = key cell's address
-        ld (charCellAddress), hl      ; draw the second cell (right uper coner)
-        ld hl, $1A10		      ; at the bottom right of the screen
-        ld (charCellCoord), hl	      ; load the coordinate to draw cell
-	call copyCharCellAndAttrByteToUpdateList
-
-	ret
-
+updateSingleCactus:
+        
