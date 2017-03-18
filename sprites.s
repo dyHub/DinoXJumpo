@@ -28,8 +28,8 @@ trex4:      defb $10, $04, 106, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 trex_is_jumping:    defb $00
 trex_up_or_down:    defb $00
-trex_jump_height:   defb $06
-trex_f:             defb $03
+trex_jump_height:   defb $04
+trex_f:             defb $02
 trex_f_ctr:         defb $00
 trex_color:         defb $06
 
@@ -38,24 +38,27 @@ trex_color:         defb $06
 ;;
 ;; 
 ;;      ---------------row col  attr  -----------sprite--------------------- on/off
-bigCactus1_1:     defb $0F, $0F, 108, $18, $58, $58, $58, $7A, $1A, $1E, $18, $01
-bigCactus2_1:     defb $10, $0F, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18, $01
-bigCactus1_2:     defb $0F, $11, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $01
-bigCactus2_2:     defb $10, $11, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $01
-bigCactus1_3:     defb $0F, $13, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $01
-bigCactus2_3:     defb $10, $13, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $01
-bigCactus1_4:     defb $0F, $15, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $01
-bigCactus2_4:     defb $10, $15, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $01
-bigCactus1_5:     defb $0F, $16, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $01
-bigCactus2_5:     defb $10, $16, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $01
+bigCactus1_1:     defb $0F, $1F, 108, $18, $58, $58, $58, $7A, $1A, $1E, $18, $01
+bigCactus2_1:     defb $10, $1F, 108, $18, $18, $5A, $5A, $7E, $18, $18, $18, $01
+bigCactus1_2:     defb $0F, $1F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $00
+bigCactus2_2:     defb $10, $1F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $00
+bigCactus1_3:     defb $0F, $1F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $00
+bigCactus2_3:     defb $10, $1F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $00
+bigCactus1_4:     defb $0F, $1F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $00
+bigCactus2_4:     defb $10, $1F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $00
+bigCactus1_5:     defb $0F, $1F, 108, $18, $18, $18, $18, $18, $1B, $1B, $DB, $00
+bigCactus2_5:     defb $10, $1F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $00
 
 
 
 ;; cactus fields
 ;; f        = frequency to update frame
 ;; f_ctr    = current frame counter
+;; rng      = probability to gen a new cactus / 256. for example, if this is 10, then probability
+;;            is 1/256 = 3.9% to gen a cactus on frame update
 cactus_f:       defb $01
 cactus_f_ctr:   defb $00
+cactus_rng:     defb $02     ;; starts off at 7%
 
 
 ;; CLOUD SPRITES

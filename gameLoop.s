@@ -122,4 +122,4 @@ include "trex.s"
 include "cactus.s"
 include "collision.s" ;; Remove this to enable no-clip
 include "score.s"
-
+include "random.s"

@@ -52,8 +52,9 @@ drawCactusesAndCheckWallCollision:
         ld (bigCactus1_1+1), a
         ld (bigCactus2_1+1), a
 
-        ;ld a, 0
-        ;ld (bigCactus1_1+11), a
+        ld a, 0
+        ld (bigCactus1_1+11), a
+        ld (bigCactus2_1+11), a
 
 drawCactus_2:
         ld a, (bigCactus1_2+11)
@@ -104,8 +105,9 @@ drawCactus_2:
         ld (bigCactus1_2+1), a
         ld (bigCactus2_2+1), a
 
-        ;ld a, 0
-        ;ld (bigCactus1_2+11), a
+        ld a, 0
+        ld (bigCactus1_2+11), a
+        ld (bigCactus2_2+11), a
 
 drawCactus_3:
         ld a, (bigCactus1_3+11)
@@ -156,8 +158,9 @@ drawCactus_3:
         ld (bigCactus1_3+1), a
         ld (bigCactus2_3+1), a
 
-        ;ld a, 0
-        ;ld (bigCactus1_3+11), a
+        ld a, 0
+        ld (bigCactus1_3+11), a
+        ld (bigCactus2_3+11), a
 drawCactus_4:
         ld a, (bigCactus1_4+11)
         cp 1                                ;                             
@@ -207,8 +210,9 @@ drawCactus_4:
         ld (bigCactus1_4+1), a
         ld (bigCactus2_4+1), a
 
-        ;ld a, 0
-        ;ld (bigCactus1_4+11), a
+        ld a, 0
+        ld (bigCactus1_4+11), a
+        ld (bigCactus2_4+11), a
 
 drawCactus_5:
         ld a, (bigCactus1_5+11)
@@ -259,8 +263,9 @@ drawCactus_5:
         ld (bigCactus1_5+1), a
         ld (bigCactus2_5+1), a
 
-        ;ld a, 0
-        ;ld (bigCactus1_5+11), a
+        ld a, 0
+        ld (bigCactus1_5+11), a
+        ld (bigCactus2_5+11), a
 
 drawCactus_done:
         ret
@@ -418,7 +423,66 @@ skyAndShift_done:
 
 
 
+;; function ----- generateCactusIfNeeded ----
+;;
+generateCactusIfNeeded:
+        ;; 1. Should we generate a cactus this frame update?
+        ld a, (cactus_rng)
+        ld b, a
+        call chance         ; a = 1 if we should gen cactus, 0 if not
+        cp 1
+        jr nz, gen_done
 
+        ;; 2. If so, find the first cactus that is off, and set it to on
+gen_check_1:
+        ld a, (bigCactus1_1+11)
+        cp 0                            ; if cactus not on, set it on
+        jp nz, gen_check_2                   
+        
+        ld a, 1
+        ld (bigCactus1_1+11), a
+        ld (bigCactus2_1+11), a
+        jr gen_done
+gen_check_2:
+        ld a, (bigCactus1_2+11)
+        cp 0                                                             
+        jp nz, gen_check_3                   
+
+        ld a, 1
+        ld (bigCactus1_2+11), a
+        ld (bigCactus2_2+11), a
+        jr gen_done
+
+gen_check_3:
+        ld a, (bigCactus1_3+11)
+        cp 0                                                             
+        jp nz, gen_check_4                   
+
+
+        ld a, 1
+        ld (bigCactus1_3+11), a
+        ld (bigCactus2_3+11), a
+        jr gen_done
+gen_check_4:
+        ld a, (bigCactus1_4+11)
+        cp 0                                                             
+        jp nz, gen_check_5                   
+
+        ld a, 1
+        ld (bigCactus1_4+11), a
+        ld (bigCactus2_4+11), a
+        jr gen_done
+gen_check_5:
+        ld a, (bigCactus1_5+11)
+        cp 0                                                             
+        jp nz, gen_done                  
+
+        ld a, 1
+        ld (bigCactus1_5+11), a
+        ld (bigCactus2_5+11), a
+
+gen_done:
+        ret        
 
 ;; function ----- updateCactuses ---------
 ;;
@@ -441,16 +505,15 @@ updateCactuses_noupdate:
         ;; 2a. Since frame counter == update frequency, then we need to move sprite
 updateCactuses_update:
         
+        ;; Check if we should randomly generate a cactus now, based on the score
+        call generateCactusIfNeeded
         ;; For all cactuses that are on, draw sky in old position, and shift them by one
         call drawSkyOnCactusesAndShift
         ;; draw!!
         call drawCactusesAndCheckWallCollision
 
-        ;; 2b. check if it hits col $0
 
 updateCactuses_end:
         ret
 
-
-updateSingleCactus:
         

@@ -21,9 +21,13 @@ rand:
 ;; in:  b - the probability, from 0 to 255
 ;; out: a - 1 if the element was chosen, 0 if not
 chance:
-        call rand 
-        cp b
-         
+        call rand           ; a = rand from 0 to 255
+        cp b                ; if a < b, we get a hit! (we know a < b if c flag is set because of a - b)
+        jr nc, chance_off
 chance_on:
+        ld a, 1
+        jr chance_end
+chance_off:
         ld a, 0
-
+chance_end:
+        ret
