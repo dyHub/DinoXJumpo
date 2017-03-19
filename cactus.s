@@ -422,13 +422,25 @@ skyAndShift_done:
         ret
 
 
-
+gen_ctr:    defb 0
 ;; function ----- generateCactusIfNeeded ----
 ;;
 generateCactusIfNeeded:
+        ;; 0. Only check every 3rd cactus update to keep min dist of 3
+        ld a, (gen_ctr)
+        cp 2            
+        jr nz, gen_ctr_inc
+        ld a, 0
+        ld (gen_ctr), a
+        jr gen_chance
+gen_ctr_inc:
+        ld a, (gen_ctr)
+        inc a
+        ld (gen_ctr), a
+        jr gen_done
+gen_chance:
         ;; 1. Should we generate a cactus this frame update?
-        ld a, (cactus_rng)
-        ld b, a
+        ld bc, (cactus_rng) ; fuck little endian lmao
         call chance         ; a = 1 if we should gen cactus, 0 if not
         cp 1
         jr nz, gen_done
@@ -442,6 +454,7 @@ gen_check_1:
         ld a, 1
         ld (bigCactus1_1+11), a
         ld (bigCactus2_1+11), a
+
         jr gen_done
 gen_check_2:
         ld a, (bigCactus1_2+11)
@@ -462,6 +475,7 @@ gen_check_3:
         ld a, 1
         ld (bigCactus1_3+11), a
         ld (bigCactus2_3+11), a
+
         jr gen_done
 gen_check_4:
         ld a, (bigCactus1_4+11)
@@ -471,6 +485,7 @@ gen_check_4:
         ld a, 1
         ld (bigCactus1_4+11), a
         ld (bigCactus2_4+11), a
+
         jr gen_done
 gen_check_5:
         ld a, (bigCactus1_5+11)
@@ -481,6 +496,7 @@ gen_check_5:
         ld (bigCactus1_5+11), a
         ld (bigCactus2_5+11), a
 
+
 gen_done:
         ret        
 
@@ -489,6 +505,7 @@ gen_done:
 ;;
 ;;
 updateCactuses:
+        ;; 1. Check if it is time to update the cactuses!
         ld a, (cactus_f)
         ld b, a                         ; b = frame frequencey to update sprite
         ld a, (cactus_f_ctr)            ; a = frame counter
@@ -500,7 +517,7 @@ updateCactuses:
 updateCactuses_noupdate:
         inc a                           ; incremenet f_ctr
         ld (cactus_f_ctr), a            ; set f_ctr = a
-        jp updateCactuses_end           ; dont need to do anything else, done
+        jp updateCactuses_checkrng      ; dont need to do anything else, done
 
         ;; 2a. Since frame counter == update frequency, then we need to move sprite
 updateCactuses_update:
@@ -511,9 +528,32 @@ updateCactuses_update:
         call drawSkyOnCactusesAndShift
         ;; draw!!
         call drawCactusesAndCheckWallCollision
+        
 
+        ; 3. Check if we need to update the cactus rng
+updateCactuses_checkrng:
+        ld a, (cactus_rng_u)
+        ld b, a
+        ld a, (cactus_rng_ctr)
+        cp b        
+        jr nz, updateCactuses_noupdate_rng 
+updateCactuses_update_rng:
+        
+        ld hl, (cactus_rng)
+        ; inc by 100 (.15% more chance) per update, and each rng update occurs about every 1s
+        ld de, 100
+        adc hl, de
+        ld (cactus_rng), hl
+        
+        ld a, 0
+        ld (cactus_rng_ctr), a
+        jr updateCactuses_end
+
+updateCactuses_noupdate_rng:
+        ld a, (cactus_rng_ctr)
+        inc a
+        ld (cactus_rng_ctr), a
 
 updateCactuses_end:
         ret
 
-        

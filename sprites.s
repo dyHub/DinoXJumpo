@@ -28,8 +28,8 @@ trex4:      defb $10, $04, 106, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 trex_is_jumping:    defb $00
 trex_up_or_down:    defb $00
-trex_jump_height:   defb $04
-trex_f:             defb $02
+trex_jump_height:   defb $05
+trex_f:             defb $01
 trex_f_ctr:         defb $00
 trex_color:         defb $06
 
@@ -54,11 +54,16 @@ bigCactus2_5:     defb $10, $1F, 108, $DF, $FF, $FF, $18, $18, $18, $18, $18, $0
 ;; cactus fields
 ;; f        = frequency to update frame
 ;; f_ctr    = current frame counter
-;; rng      = probability to gen a new cactus / 256. for example, if this is 10, then probability
-;;            is 1/256 = 3.9% to gen a cactus on frame update
+;; rng      = probability to gen a new cactus / 64K. for example, if this is 700, then probability
+;;            is 700/64K ~ 1% to gen a cactus on frame update
+;;            (STORED IN LITTLE ENDIAN FORMAT, BEWARE OF LITTLE ENDIAN... i hate little endian...)
+;; rng_u    = how many frames to wait before increasing the rng by 1. (NOTE:$ff is about once every 1s)
+;; rng_ctr  = a counter of the current frame for waiting to increase rng
 cactus_f:       defb $01
 cactus_f_ctr:   defb $00
-cactus_rng:     defb $02     ;; starts off at 7%
+cactus_rng:     defb $ff, $00       ;; starts off at .4%
+cactus_rng_u:   defb 25             ;; about 1s
+cactus_rng_ctr: defb $00
 
 
 ;; CLOUD SPRITES
