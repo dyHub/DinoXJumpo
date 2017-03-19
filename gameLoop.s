@@ -14,10 +14,22 @@
         ;; 2. Init background drawing
 init_game:
         ;; sand
-	ld hl, $1f0f
-	ld (bigCactus1_1), hl
-	ld hl, $1f10
-	ld (bigCactus2_1), hl
+	
+	ld a, $1f
+	ld (bigCactus1_1+1), a
+	ld (bigCactus2_1+1), a
+
+	ld (bigCactus1_2+1), a
+	ld (bigCactus2_2+1), a
+
+	ld (bigCactus1_3+1), a
+	ld (bigCactus2_3+1), a
+
+	ld (bigCactus1_4+1), a
+	ld (bigCactus2_4+1), a
+
+	ld (bigCactus1_5+1), a
+	ld (bigCactus2_5+1), a
 
         ld hl, $1100                        ; h = row l = col
 init_loop_sand:
@@ -132,10 +144,11 @@ GameOver:
 	in a, (c)			; see if space key is pressed
 	rra				; outermost bit = key space
 	jr c, GameOver_end
-
+	
+	ld b, 30
+loophalt:
 	halt
-	halt
-	halt
+	djnz loophalt
 	call init_game		; it's being pressed, then jump t-rex
 	ret
 
