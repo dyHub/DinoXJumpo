@@ -81,7 +81,7 @@ black:          defb $00, $00, $00, $00, $00, $00, $00, $00, $00
 sand:           defb $06, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
 sky:            defb $00, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
 
-GAMEOVER:  defb 106	; attribute byte 
+GAMEOVER:  defb 130	; attribute byte 
 	   defb $0F, $0F, $3C, $3C, $F0, $F0, $F0, $F0  ;G
 	   defb $FF, $FF, $00, $00, $00, $00, $3F, $3F  ;G  
 	   defb $F0, $F0, $3C, $3C, $0F, $0F, $00, $00  ;G  
