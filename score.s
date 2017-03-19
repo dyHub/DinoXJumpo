@@ -47,6 +47,14 @@ userScoreNextPlace:
     ld (hl),a
     jp userScoreNextPlace
 
+
+resetScore:
+
+    ; reset score here
+    
+
+
+
 string: defb 22,1,1,'score:'
 score:  defb 22,1,7,'000000'
 eostr:  equ $

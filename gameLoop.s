@@ -1,7 +1,24 @@
 
         ;; 2. Init background drawing
-
+init_game:
         ;; sand
+	
+	ld a, $1f
+	ld (bigCactus1_1+1), a
+	ld (bigCactus2_1+1), a
+
+	ld (bigCactus1_2+1), a
+	ld (bigCactus2_2+1), a
+
+	ld (bigCactus1_3+1), a
+	ld (bigCactus2_3+1), a
+
+	ld (bigCactus1_4+1), a
+	ld (bigCactus2_4+1), a
+
+	ld (bigCactus1_5+1), a
+	ld (bigCactus2_5+1), a
+
         ld hl, $1100                        ; h = row l = col
 init_loop_sand:
 
@@ -106,6 +123,9 @@ gameLoop_endcheckjump:
         call updateTrex
         call updateCactuses
         ;;call checkCollision
+	call TrexCollision
+	cp 0
+	jr z, GameOver
         call updateScore
 
 	ei
@@ -113,9 +133,30 @@ gameLoop_endcheckjump:
 
         jp gameLoop
 
+GameOver:
+
+ 	;; 1. Listen for keys
+	ld bc, 32766			; space key
+	in a, (c)			; see if space key is pressed
+	rra				; outermost bit = key space
+	jr c, GameOver_end
+	
+	ld b, 30
+loophalt:
+	halt
+	djnz loophalt
+	call init_game		; it's being pressed, then jump t-rex
+	ret
+
+GameOver_end:
+	;di
+	halt
+	jp GameOver
+
 
 include "trex.s"
 include "cactus.s"
 include "collision.s" ;; Remove this to enable no-clip
 include "score.s"
 include "random.s"
+include "collisionCheck.s"
