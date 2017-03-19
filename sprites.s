@@ -70,8 +70,8 @@ cactus_rng_ctr: defb $00
 
 ;; CLOUD SPRITES
 ;;                   row col  attr  ----sprite---------------------------
-cloud1:         defb $10, $02, 111, $06, $1F, $20, $40, $80, $80, $7F, $00
-cloud2:         defb $11, $02, 111, $00, $C0, $20, $18, $06, $08, $FC, $00
+cloud1:         defb $10, $02,  71, $06, $1F, $6F, $7F, $FF, $FF, $EF, $00
+cloud2:         defb $11, $02,  71, $00, $00, $E0, $F8, $FF, $FE, $F6, $00
 
 
 
