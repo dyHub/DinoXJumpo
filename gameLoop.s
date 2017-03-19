@@ -12,7 +12,7 @@ init_game:
 
         ld hl, $00ff
         ld (cactus_rng), hl
-        
+
 	ld a, $1f
 	ld (bigCactus1_1+1), a
 	ld (bigCactus2_1+1), a
@@ -119,7 +119,7 @@ gameLoop:
 	rra				; outermost bit = key space
 
         ;; 1a. If space is down, set the space_down field and jump the trex
-        jr c, gameLoop_nospace 
+        jr c, gameLoop_nospace
         ld a, 1
         ld (trex_space_down), a
 	call jumpTrex		        ; it's being pressed, then jump t-rex
@@ -145,7 +145,9 @@ gameLoop_endcheckjump:
         jp gameLoop
 
 GameOver:
-	call noise
+	call deathNoise
+    call setHighScore
+    call resetScore
 GameOver_loop:
 	call drawGameOver
  	;; 1. Listen for keys
@@ -153,7 +155,7 @@ GameOver_loop:
 	in a, (c)			; see if space key is pressed
 	rra				; outermost bit = key space
 	jr c, GameOver_end
-	
+
 	ld b, 30
 loophalt:
 	halt
@@ -166,13 +168,13 @@ GameOver_end:
 	halt
 	jp GameOver_loop
 
-noise:  
+deathNoise:
 	ld e,250            ; repeat 250 times.
        	ld hl,0             ; start pointer in ROM.
-noise2: 
+noise2:
 	push de
         ld b,32             ; length of step.
-noise0: 
+noise0:
 	push bc
        	ld a,(hl)           ; next "random" number.
        	inc hl              ; pointer.
@@ -180,7 +182,7 @@ noise0:
        	out (254),a         ; write to speaker.
        	ld a,e              ; as e gets smaller...
        	cpl                 ; ...we increase the delay.
-noise1: 
+noise1:
 	dec a               ; decrement loop counter.
        	jr nz,noise1        ; delay loop.
        	pop bc
@@ -193,9 +195,9 @@ noise1:
        	ret c
        	ld e,a
        	cpl
-noise3: 
+noise3:
 	ld b,40             ; silent period.
-noise4: 
+noise4:
 	djnz noise4
        	dec a
        	jr nz,noise3
