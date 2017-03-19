@@ -9,13 +9,6 @@ updateTrex:
         cp 1                            ; check if 1 (jumping). z = 0 if jumping
         jp nz, updateTrex_nojump        ; if not jumping, dont do anything
         
-        ;; 1a. If jumping, check if space bar is off, then set dir to down
-        ld a, (trex_space_down)
-        cp 0
-        jp nz, updateTrex_check_ctr
-        ld a, 0
-        ld (trex_up_or_down), a
-
 updateTrex_check_ctr:
         ;; 2. if jumping, update the trex frame counter
         ld a, (trex_f)
@@ -33,6 +26,15 @@ updateTrex_noupdate:
 
         ;; 2a. Since frame counter == update frequency, then we need to move trex
 updateTrex_update:
+
+        ;; If jumping, check if space bar is off, then set dir to down
+        ld a, (trex_space_down)
+        cp 0
+        jp nz, updateTrex_checkdir
+        ld a, 0
+        ld (trex_up_or_down), a
+
+updateTrex_checkdir:
         ;; 2b. check which direction we should update him
         ld a, (trex_up_or_down)
         cp 1                            ; check if trex_up_or_down is 1 (up). if so, z = 0
@@ -130,8 +132,37 @@ updateTrex_checkifdone:
 
         ld hl, (trex4)                      ; h = col, l = row
         ld a, $10
-        cp l                                ; check if trex4 row == ground row
-        jr nz, updateTrex_nojump
+        cp l                                ; check if trex4 row == ground row or trex4row > ground
+        jr z, updateTrex_hitground    
+        jr c, updateTrex_hitground
+        jr updateTrex_nojump
+updateTrex_hitground:
+        
+        ld hl, $030f
+        ld (trex1), hl
+        ld hl, $040f
+        ld (trex2), hl
+        ld hl, $0310
+        ld (trex3), hl
+        ld hl, $0410
+        ld (trex4), hl
+        
+        ;; draw sand on ground
+        ld hl, sand+1
+        ld (charCellAddress), hl
+        ld hl, (sand)
+        ld (attrByte), hl
+        ld hl, $0311
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+        ld hl, sand+1
+        ld (charCellAddress), hl
+        ld hl, (sand)
+        ld (attrByte), hl
+        ld hl, $0411
+        ld (charCellCoord), hl)
+	call copyCharCellAndAttrByteToUpdateList
+
         ld a, $00
         ld (trex_is_jumping), a             ; reset is_jumping to 0 (false)
         ld (trex_f_ctr), a                  ; reset f_ctr to 0

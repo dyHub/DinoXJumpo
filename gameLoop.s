@@ -1,8 +1,18 @@
 
         ;; 2. Init background drawing
 init_game:
-        ;; sand
-	
+        ld hl, $030f
+        ld (trex1), hl
+        ld hl, $040f
+        ld (trex2), hl
+        ld hl, $0310
+        ld (trex3), hl
+        ld hl, $0410
+        ld (trex4), hl
+
+        ld hl, $00ff
+        ld (cactus_rng), hl
+        
 	ld a, $1f
 	ld (bigCactus1_1+1), a
 	ld (bigCactus2_1+1), a
