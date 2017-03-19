@@ -78,3 +78,36 @@ cloud2:         defb $11, $02, 111, $00, $C0, $20, $18, $06, $08, $FC, $00
 black:          defb $00, $00, $00, $00, $00, $00, $00, $00, $00
 sand:           defb $06, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
 sky:            defb $45, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
+
+
+GAMEOVER:  defb 106	; attribute byte 
+	   defb $0F, $0F, $3C, $3C, $F0, $F0, $F0, $F0  ;G
+	   defb $FF, $FF, $00, $00, $00, $00, $3F, $3F  ;G  
+	   defb $F0, $F0, $3C, $3C, $0F, $0F, $00, $00  ;G  
+	   defb $0F, $0F, $0F, $0F, $FF, $FF, $00, $00  ;G  
+	   defb $03, $03, $0F, $0F, $3C, $3C, $3C, $3C  ;A  
+	   defb $F0, $F0, $3C, $3C, $0F, $0F, $0F, $0F  ;A  
+	   defb $3F, $3F, $3C, $3C, $3C, $3C, $00, $00  ;A  
+	   defb $FF, $FF, $0F, $0F, $0F, $0F, $00, $00  ;A  
+	   defb $3C, $3C, $3F, $3F, $3F, $3F, $3C, $3C  ;M
+	   defb $0F, $0F, $3F, $3F, $FF, $FF, $CF, $CF  ;M
+	   defb $3C, $3C, $3C, $3C, $3C, $3C, $00, $00  ;M
+	   defb $0F, $0F, $0F, $0F, $0F, $0F, $00, $00  ;M
+	   defb $3F, $3F, $3C, $3C, $3C, $3C, $3F, $3F  ;E
+	   defb $FF, $FF, $00, $00, $00, $00, $F0, $F0  ;E
+	   defb $3C, $3C, $3C, $3C, $3F, $3F, $00, $00  ;E
+	   defb $00, $00, $00, $00, $FF, $FF, $00, $00  ;E
+	   defb $3F, $3F, $F0, $F0, $F0, $F0, $F0, $F0  ;O
+	   defb $FC, $FC, $0F, $0F, $0F, $0F, $0F, $0F  ;O
+	   defb $F0, $F0, $F0, $F0, $3F, $3F, $00, $00  ;O
+	   defb $0F, $0F, $0F, $0F, $FC, $FC, $00, $00  ;O
+	   defb $3C, $3C, $3C, $3C, $3C, $3C, $3F, $3F  ;V 
+	   defb $0F, $0F, $0F, $0F, $0F, $0F, $3F, $3F  ;V 
+	   defb $0F, $0F, $03, $03, $00, $00, $00, $00  ;V 
+	   defb $FC, $FC, $F0, $F0, $C0, $C0, $00, $00  ;V 
+	   defb $3F, $3F, $3C, $3C, $3C, $3C, $3C, $3C  ;R
+	   defb $FC, $FC, $0F, $0F, $0F, $0F, $3F, $3F  ;R
+	   defb $3F, $3F, $3C, $3C, $3C, $3C, $00, $00  ;R
+	   defb $F0, $F0, $FC, $FC, $3F, $3F, $00, $00  ;R
+	 
+

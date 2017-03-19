@@ -139,6 +139,7 @@ gameLoop:
 
 GameOver:
 
+	call drawGameOver
  	;; 1. Listen for keys
 	ld bc, 32766			; space key
 	in a, (c)			; see if space key is pressed
@@ -164,3 +165,4 @@ include "collision.s" ;; Remove this to enable no-clip
 include "score.s"
 include "random.s"
 include "collisionCheck.s"
+include "gameOver.s"
