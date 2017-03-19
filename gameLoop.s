@@ -131,6 +131,7 @@ gameLoop_endcheckjump:
 
         ;; 2. Loop through all your sprites, and update them (hard coded logic for trex, cactus, etc...)
         call updateTrex
+
         call updateCactuses
         ;;call checkCollision
 	call TrexCollision
@@ -144,7 +145,8 @@ gameLoop_endcheckjump:
         jp gameLoop
 
 GameOver:
-
+	call noise
+GameOver_loop:
 	call drawGameOver
  	;; 1. Listen for keys
 	ld bc, 32766			; space key
@@ -162,7 +164,42 @@ loophalt:
 GameOver_end:
 	;di
 	halt
-	jp GameOver
+	jp GameOver_loop
+
+noise:  
+	ld e,250            ; repeat 250 times.
+       	ld hl,0             ; start pointer in ROM.
+noise2: 
+	push de
+        ld b,32             ; length of step.
+noise0: 
+	push bc
+       	ld a,(hl)           ; next "random" number.
+       	inc hl              ; pointer.
+       	and 248             ; we want a black border.
+       	out (254),a         ; write to speaker.
+       	ld a,e              ; as e gets smaller...
+       	cpl                 ; ...we increase the delay.
+noise1: 
+	dec a               ; decrement loop counter.
+       	jr nz,noise1        ; delay loop.
+       	pop bc
+       	djnz noise0         ; next step.
+       	pop de
+       	ld a,e
+       	sub 24              ; size of step.
+       	cp 30               ; end of range.
+       	ret z
+       	ret c
+       	ld e,a
+       	cpl
+noise3: 
+	ld b,40             ; silent period.
+noise4: 
+	djnz noise4
+       	dec a
+       	jr nz,noise3
+       	jr noise2
 
 
 include "trex.s"

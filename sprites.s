@@ -16,7 +16,7 @@
 ;;---------------row col  attr  -----------sprite---------------------
 trex1:      defb $0F, $03,   2, $00, $00, $00, $00, $00, $81, $83, $C7
 trex2:      defb $0F, $04,   2, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
-trex3:      defb $10, $03,   2, $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
+trex3:      defb $10, $03,   2, $FF, $7F, $3F, $1F, $0D, $0E, $00, $00
 trex4:      defb $10, $04,   2, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
 ;; trex fields -
@@ -31,6 +31,8 @@ trex_is_jumping:    defb $00
 trex_up_or_down:    defb $00
 trex_space_down:    defb $00
 trex_jump_height:   defb $06
+trex_run_f:	    defb $04
+trex_run_f_ctr:	    defb $00
 trex_f:             defb $01
 trex_f_ctr:         defb $00
 trex_color:         defb $06
