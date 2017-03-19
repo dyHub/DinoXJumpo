@@ -428,7 +428,7 @@ gen_ctr:    defb 0
 generateCactusIfNeeded:
         ;; 0. Only check every 3rd cactus update to keep min dist of 3
         ld a, (gen_ctr)
-        cp 2            
+        cp 5            
         jr nz, gen_ctr_inc
         ld a, 0
         ld (gen_ctr), a
@@ -540,8 +540,8 @@ updateCactuses_checkrng:
 updateCactuses_update_rng:
         
         ld hl, (cactus_rng)
-        ; inc by 100 (.15% more chance) per update, and each rng update occurs about every 1s
-        ld de, 100
+        ; inc by 100 (.07% more chance) per update, and each rng update occurs about every 1s
+        ld de, 50
         adc hl, de
         ld (cactus_rng), hl
         

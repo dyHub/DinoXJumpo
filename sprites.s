@@ -22,13 +22,15 @@ trex4:      defb $10, $04, 106, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 ;; trex fields -
 ;; is_jumping   = if he's jumping (1) or not (0)
 ;; up_or_down   = if jumping, then lets us know if he's going up (1) or down (0)
+;; space_down   = if the space bar is down
 ;; jump_height  = how many cells to jump up
 ;; f            = the frame frequency to move the trex up or down
 ;; f_ctr        = the current frame counter. when it hits f, move trex up or down
 
 trex_is_jumping:    defb $00
 trex_up_or_down:    defb $00
-trex_jump_height:   defb $05
+trex_space_down:    defb $00
+trex_jump_height:   defb $06
 trex_f:             defb $01
 trex_f_ctr:         defb $00
 trex_color:         defb $06

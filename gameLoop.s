@@ -1,15 +1,3 @@
-        ;; 1. Set trex1=$000F, trex2=$010F, trex3=$0010, trex4=$0110
-        ;ld hl, $030F                ; h = col, l = row
-        ;ld (trex1), hl
-
-        ;ld hl, $040F
-        ;ld (trex2), hl
-
-        ;ld hl, $0310
-        ;ld (trex3), hl
-
-        ;ld hl, $0410
-        ;ld (trex4), hl
 
         ;; 2. Init background drawing
 
@@ -102,9 +90,17 @@ gameLoop:
 	ld bc, 32766			; space key
 	in a, (c)			; see if space key is pressed
 	rra				; outermost bit = key space
-	push af				; remember the value
-	call nc, jumpTrex		; it's being pressed, then jump t-rex
-	pop af
+
+        ;; 1a. If space is down, set the space_down field and jump the trex
+        jr c, gameLoop_nospace 
+        ld a, 1
+        ld (trex_space_down), a
+	call jumpTrex		        ; it's being pressed, then jump t-rex
+        jr gameLoop_endcheckjump
+gameLoop_nospace:
+        ld a, 0
+        ld (trex_space_down), a
+gameLoop_endcheckjump:
 
         ;; 2. Loop through all your sprites, and update them (hard coded logic for trex, cactus, etc...)
         call updateTrex

@@ -8,7 +8,15 @@ updateTrex:
         ld a, (trex_is_jumping)
         cp 1                            ; check if 1 (jumping). z = 0 if jumping
         jp nz, updateTrex_nojump        ; if not jumping, dont do anything
+        
+        ;; 1a. If jumping, check if space bar is off, then set dir to down
+        ld a, (trex_space_down)
+        cp 0
+        jp nz, updateTrex_check_ctr
+        ld a, 0
+        ld (trex_up_or_down), a
 
+updateTrex_check_ctr:
         ;; 2. if jumping, update the trex frame counter
         ld a, (trex_f)
         ld b, a                         ; b = frequency to update trex if jumping
