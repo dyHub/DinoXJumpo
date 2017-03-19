@@ -135,7 +135,7 @@ updateTrex_checkifdone:
         cp l                                ; check if trex4 row == ground row or trex4row > ground
         jr z, updateTrex_hitground    
         jr c, updateTrex_hitground
-        jr updateTrex_nojump
+        jp updateTrex_jumpend
 updateTrex_hitground:
         
         ld hl, $030f
@@ -145,8 +145,8 @@ updateTrex_hitground:
         ld hl, $0310
         ld (trex3), hl
         ld hl, $0410
-        ld (trex4), hl
-        
+        ld (trex4), hl 
+
         ;; draw sand on ground
         ld hl, sand+1
         ld (charCellAddress), hl
@@ -166,10 +166,59 @@ updateTrex_hitground:
         ld a, $00
         ld (trex_is_jumping), a             ; reset is_jumping to 0 (false)
         ld (trex_f_ctr), a                  ; reset f_ctr to 0
-updateTrex_nojump:
+updateTrex_nojump:	
+	
+	ld a, (trex_run_f)
+	ld b, a
+	ld a, (trex_run_f_ctr)
+	cp b				; f_ctr == f?
+	jr nz, inc_run			; if not, increment run
+
+	;; running the left leg
+	ld a, (trex3+8)
+	xor $02
+	ld (trex3+8), a
+
+	ld a, (trex3+9)
+	xor $08
+	ld (trex3+9), a
+
+	ld a, (trex3+10)
+	xor $0C
+	ld (trex3+10), a
+
+
+	;; running the right leg
+	ld a, (trex4+7)
+	xor $60
+	ld (trex4+7), a
+
+	ld a, (trex4+8)
+	xor $80
+	ld (trex4+8), a
+
+	ld a, (trex4+9)
+	xor $80
+	ld (trex4+9), a
+
+	ld a, (trex4+10)
+	xor $C0
+	ld (trex4+10), a
+
+	;; re-draw the trex
+	call drawTrex
+	ld a, 0
+	ld (trex_run_f_ctr), a
+	jr updateTrex_jumpend
+
+inc_run:
+	ld a, (trex_run_f_ctr)
+	inc a
+	ld (trex_run_f_ctr), a
+
+updateTrex_jumpend:
         ;; 3. Done
         ret
-
 
 
 ;; ---- FUNCTION updateTrex -----
@@ -221,10 +270,18 @@ drawTrex:
 ;;
 
 jumpTrex:
+
         ;; 1. if already jumping, ignore request
         ld a, (trex_is_jumping)
         cp 1                        ; if jumping, then z flag is 0
         jr z, jumpTrex_end
+
+	  
+	;; play the sound when jump	
+	ld hl,860           ; pitch.
+       	ld de,15           ; duration.
+       	call 949            ; ROM beeper routine.
+
 
         ;; 2. set set state to jumping. updateTrex will take care of actually jumping him
         ld a, $01
