@@ -1,4 +1,7 @@
 
+numericScore: defb $00, $00
+numericHighScore: defb $00, $00
+
 
 drawScore:
 
@@ -10,13 +13,17 @@ drawScore:
 
 updateScore:
 
+  ld hl, numericScore
+  inc hl
+  ld (numericScore), hl
+
   ld a,2
   call 5633
   ld de,score
   ld bc,eostr-score
   call 8252
 
-  ld hl,score+8
+  ld hl,score+7
   ld b,1
   call  userScore
 
@@ -60,17 +67,28 @@ resetScore:
     inc hl
     ld (hl), 48
     inc hl
-    ld (hl), 48
-    inc hl
+
+    ld hl, $0000
+    ld (numericScore), hl
 
     ret
 
 setHighScore:
 
-    ld hl, score + 8
-    ld a, (hl)
-    ld hl, highScore + 8
-    ld (hl), a
+    ld hl, numericScore
+    ex de, hl
+    ld hl, numericHighScore
+    ld a, l
+    cp e
+    jr z, noUpperBit
+    jp M, noNewHS
+noUpperBit:
+    ld a, h
+    cp d
+    jp M, noNewHS
+    ld (numericHighScore), de
+
+
     ld hl, score + 7
     ld a, (hl)
     ld hl, highScore + 7
@@ -98,7 +116,7 @@ setHighScore:
     ld bc,eostr-score
     call 8252
 
-endHighScore:
+noNewHS:
 
     ret
 
@@ -106,7 +124,7 @@ endHighScore:
 
 
 stringScore: defb 22,1,1,'scr:'
-score:  defb 22,1,5,'000000'
+score:  defb 22,1,5,'00000'
 stringHighScr: defb 22,1,20,'pScr:'
-highScore: defb 22,1,25,'000000'
+highScore: defb 22,1,25,'00000'
 eostr:  equ $
