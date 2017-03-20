@@ -10,7 +10,7 @@ init_game:
         ld hl, $0410
         ld (trex4), hl
 
-        ld hl, $00ff
+        ld hl, $02ff
         ld (cactus_rng), hl
 
 	ld a, $1f
