@@ -4,8 +4,8 @@ drawScore:
 
   ld a,2
   call 5633
-  ld de,string
-  ld bc,eostr-string
+  ld de,stringScore
+  ld bc,eostr-stringScore
   call 8252
 
 updateScore:
@@ -15,7 +15,6 @@ updateScore:
   ld de,score
   ld bc,eostr-score
   call 8252
-
 
   ld hl,score+8
   ld b,1
@@ -50,11 +49,64 @@ userScoreNextPlace:
 
 resetScore:
 
-    ; reset score here
-    
+    ld hl, score + 3
+    ld (hl), 48
+    inc hl
+    ld (hl), 48
+    inc hl
+    ld (hl), 48
+    inc hl
+    ld (hl), 48
+    inc hl
+    ld (hl), 48
+    inc hl
+    ld (hl), 48
+    inc hl
+
+    ret
+
+setHighScore:
+
+    ld hl, score + 8
+    ld a, (hl)
+    ld hl, highScore + 8
+    ld (hl), a
+    ld hl, score + 7
+    ld a, (hl)
+    ld hl, highScore + 7
+    ld (hl), a
+    ld hl, score + 6
+    ld a, (hl)
+    ld hl, highScore + 6
+    ld (hl), a
+    ld hl, score + 5
+    ld a, (hl)
+    ld hl, highScore + 5
+    ld (hl), a
+    ld hl, score + 4
+    ld a, (hl)
+    ld hl, highScore + 4
+    ld (hl), a
+    ld hl, score + 3
+    ld a, (hl)
+    ld hl, highScore + 3
+    ld (hl), a
+
+    ld a,2
+    call 5633
+    ld de,score
+    ld bc,eostr-score
+    call 8252
+
+endHighScore:
+
+    ret
+
+    ;Theres prob a more effecient way to do this
 
 
-
-string: defb 22,1,1,'score:'
-score:  defb 22,1,7,'000000'
+stringScore: defb 22,1,1,'scr:'
+score:  defb 22,1,5,'000000'
+stringHighScr: defb 22,1,20,'pScr:'
+highScore: defb 22,1,25,'000000'
 eostr:  equ $
