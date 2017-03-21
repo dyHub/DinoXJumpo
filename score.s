@@ -13,7 +13,7 @@ drawScore:
 
 updateScore:
 
-  ld hl, numericScore
+  ld hl, (numericScore)
   inc hl
   ld (numericScore), hl
 
@@ -80,14 +80,15 @@ setHighScore:
     ld hl, numericHighScore
     ld a, l
     cp e
-    jr z, noUpperBit
-    jp M, noNewHS
+    
+    ld hl, (numericScore)
+    ex de, hl                   ; de = numericScore
+    ld hl, (numericHighScore)   ; hl = numericHighScore
+    sbc hl, de                  ; numericHighScore - numericScore
+                                ; if c flag is set, then numericScore is new high score
+    jr nc, noNewHS
 noUpperBit:
-    ld a, h
-    cp d
-    jp M, noNewHS
     ld (numericHighScore), de
-
 
     ld hl, score + 7
     ld a, (hl)
