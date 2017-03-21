@@ -264,6 +264,45 @@ drawTrex:
 
 	ret
 
+;; function drawTrex_forinit
+drawTrex_forinit:
+
+
+	ld hl, trex1+3                  ; hl = key cell's address
+        ld (charCellAddress), hl        ; draw tne first cell (left uper coner)
+	ld hl, $0810                    ; h = col, l = row
+	ld (charCellCoord), hl
+	ld hl, trex1+2
+	ld (attrByteAddress), hl
+	call copyCharCellAndAttrByteToScreen
+
+	ld hl, trex2+3                  ; hl = key cell's address
+        ld (charCellAddress), hl        ; draw the second cell (right uper coner)
+        ld hl, $0811		        ; at the bottom right of the screen
+        ld (charCellCoord), hl	        ; load the coordinate to draw cell
+	ld hl, trex2+2
+	ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+
+	ld hl, trex3+3                  ; hl = key cell's address
+        ld (charCellAddress), hl        ; draw tne third cell (left bottom coner)
+        ld hl, $0910                  ; at the bottom right of the screen
+        ld (charCellCoord), hl          ; load the coordinate to draw cell
+	ld hl, trex3+2
+	ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+
+	ld hl, trex4+3                  ; hl = key cell's address
+        ld (charCellAddress), hl        ; draw tne forth cell (right bottom coner)
+        ld hl, $0911                    ; at the bottom right of the screen
+        ld (charCellCoord), hl          ; load the coordinate to draw cell
+	ld hl, trex4+2
+	ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+	ret
 ;; ---- FUNCTION updateTrex -----
 ;;
 ;; draws the trex accordingly depending on if he's jumping, what direction he's in in the jump, etc

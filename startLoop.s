@@ -1,4 +1,5 @@
 	;; start loop 
+switch_dino_ctr: defb $00   ;; switch colors every 10 loops
 
 startHere:
 	call 3503           ; ROM routine - clears screen, opens chan 2.
@@ -13,18 +14,41 @@ startHere:
 	
 	call drawPromote
 
-	call drawTrex
+	;call drawTrex
 	
 	
 startingLoop:	
+       
+        ld a, (switch_dino_ctr)
+        inc a
+        cp $ff
+        jr nz, startingLoop_switchcolorend
 
-	
+startingLoop_switchcolor:
+        ld a, (trex1+2)
+        xor 3
+        ld (trex1+2), a
+        ld (trex2+2), a
+        ld (trex3+2), a
+        ld (trex4+2), a
+        
+        ld a, 0
+startingLoop_switchcolorend:
+        ld (switch_dino_ctr), a
+        call drawTrex_forinit
+
+
 	ld bc,63486         ; keyboard row 1-5/joystick port 2.
        	in a,(c)            ; see what keys are pressed.
        	rra                 ; outermost bit = key 1.
-       	;push af             ; remember the value.
        	jr c, multi_player_game_start        ; it's being pressed, move left.
 
+        ld a,2
+        ld (trex1+2), a
+        ld (trex2+2), a
+        ld (trex3+2), a
+        ld (trex4+2), a
+        
 	jp init_game
 
 multi_player_game_start:
@@ -35,6 +59,12 @@ multi_player_game_start:
 	rra			; key 2
        	;push af             ; remember the value.
        	jr c, startingLoop        ; it's being pressed, move left.
+
+        ld a,2
+        ld (trex1+2), a
+        ld (trex2+2), a
+        ld (trex3+2), a
+        ld (trex4+2), a
 
 	jp init_game_multi
 
