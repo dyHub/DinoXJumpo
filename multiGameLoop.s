@@ -57,6 +57,27 @@ init_all_cactus:
 	ld (bigCactus1_5+1), a
 	ld (bigCactus2_5+1), a
 
+first_player_enemy:
+	ld a, $06
+	ld (bigCactus1_1), a
+	ld (bigCactus1_4), a
+	ld (bigCactus1_5), a
+	ld a, $07
+	ld (bigCactus2_1), a
+	ld (bigCactus2_4), a
+	ld (bigCactus2_5), a
+
+second_player_enemy:
+	ld a, $14
+	ld (bigCactus1_2), a
+	ld (bigCactus1_3), a
+	ld (bigCactus1_6), a
+	ld a, $15
+	ld (bigCactus2_2), a
+	ld (bigCactus2_3), a
+	ld (bigCactus2_6), a
+	
+
         ld hl, $1600                        ; h = row l = col
 init_loop_sand2:
 
