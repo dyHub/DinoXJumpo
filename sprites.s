@@ -103,6 +103,15 @@ cactus_rng_ctr: defb $00
 cloud1:         defb $10, $02,  71, $06, $1F, $6F, $7F, $FF, $FF, $EF, $00
 cloud2:         defb $11, $02,  71, $00, $00, $E0, $F8, $FF, $FE, $F6, $00
 
+cloud3:         defb $04, $02,  71, $06, $1F, $6F, $7F, $FF, $FF, $EF, $00
+cloud4:         defb $05, $02,  71, $00, $00, $E0, $F8, $FF, $FE, $F6, $00
+
+cloud5:         defb $13, $01,  71, $06, $1F, $6F, $7F, $FF, $FF, $EF, $00
+cloud6:         defb $14, $01,  71, $00, $00, $E0, $F8, $FF, $FE, $F6, $00
+
+cloud7:         defb $19, $02,  71, $06, $1F, $6F, $7F, $FF, $FF, $EF, $00
+cloud8:         defb $1A, $02,  71, $00, $00, $E0, $F8, $FF, $FE, $F6, $00
+
 
 
 ;; GENERAL SPRITES WITH NO COORDINATES ATTACHED TO IT

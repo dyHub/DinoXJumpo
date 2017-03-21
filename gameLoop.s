@@ -116,6 +116,55 @@ init_loop_sky_done:
         ld (attrByteAddress), hl
         call copyCharCellAndAttrByteToScreen
 
+	 ld hl, cloud3+3
+        ld (charCellAddress), hl
+        ld hl, (cloud3)
+        ld (charCellCoord), hl
+        ld hl, cloud3+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+        ld hl, cloud4+3
+        ld (charCellAddress), hl
+        ld hl, (cloud4)
+        ld (charCellCoord), hl
+        ld hl, cloud4+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+	 ld hl, cloud5+3
+        ld (charCellAddress), hl
+        ld hl, (cloud5)
+        ld (charCellCoord), hl
+        ld hl, cloud5+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+        ld hl, cloud6+3
+        ld (charCellAddress), hl
+        ld hl, (cloud6)
+        ld (charCellCoord), hl
+        ld hl, cloud6+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, cloud7+3
+        ld (charCellAddress), hl
+        ld hl, (cloud7)
+        ld (charCellCoord), hl
+        ld hl, cloud7+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+        ld hl, cloud8+3
+        ld (charCellAddress), hl
+        ld hl, (cloud8)
+        ld (charCellCoord), hl
+        ld hl, cloud8+2
+        ld (attrByteAddress), hl
+        call copyCharCellAndAttrByteToScreen
+
+
         ;; 3. draw inital trex and cactus
 	call drawTrex
 	;call drawCactuses
