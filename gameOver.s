@@ -1,5 +1,6 @@
 drawGameOver:
 
+	call restartPromote
 ;; DRAW G
 drawG:
 	ld hl, GAMEOVER+1                      ; bc = address of sand char cell
@@ -258,3 +259,14 @@ drawR:
 
 	ret
 
+restartPromote:
+	ld a,2              		; upper screen
+       	call 5633              		; open channel
+       	ld de,restartString        	; address of string
+       	ld bc,eostr3-restartString  	; length of string to print
+       	call 8252           		; print our string
+	ret
+
+restartString: defb 22,11,7,'Restart the Game'
+restartString2: defb 22,12,7,'Press *Space* key'
+eostr3:  equ $
