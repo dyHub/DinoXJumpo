@@ -632,7 +632,10 @@ GameJumpo:
 
 
 videoUpdateList_local: equ $a000  
-promote_single: defb 22,2,2,'Press *1* to start the game'
+promote_single: defb 22,1,2,'Start single player game'
+promote_single1: defb 22,2,8,'Press *1*'
+promote_single2: defb 22,3,2,'Start multi-player game'
+promote_single3: defb 22,4,8,'Press *2*'
 developer: defb 22,17,2,'Developers:'
 name1: defb 22,19,2,'Yuhan Dai'
 name2: defb 22,20,2,'Kareem Moussa'

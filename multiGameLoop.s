@@ -38,7 +38,7 @@ init_second_trex:
 	
 
 init_all_cactus:
-        ld hl, $02ff
+        ld hl, $0Bff
         ld (cactus_rng), hl
 
 	ld a, $1f
@@ -252,5 +252,5 @@ noise4x:
 
 include 'trex_player2.s'
 include 'trex_player1.s'
-
+include 'multiCollision.s'
 
