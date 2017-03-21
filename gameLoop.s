@@ -206,7 +206,7 @@ noise4:
 
 include "trex.s"
 include "cactus.s"
-include "collision.s" ;; Remove this to enable no-clip
+;include "collision.s" ;; Uncomment to enable no-clip
 include "score.s"
 include "random.s"
 include "collisionCheck.s"
