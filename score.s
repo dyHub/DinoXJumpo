@@ -13,7 +13,7 @@ drawScore:
 
 updateScore:
 
-  ld hl, numericScore
+  ld hl, (numericScore)
   inc hl
   ld (numericScore), hl
 
@@ -75,19 +75,15 @@ resetScore:
 
 setHighScore:
 
-    ld hl, numericScore
-    ex de, hl
-    ld hl, numericHighScore
-    ld a, l
-    cp e
-    jr z, noUpperBit
-    jp M, noNewHS
-noUpperBit:
-    ld a, h
-    cp d
-    jp M, noNewHS
-    ld (numericHighScore), de
 
+    ld hl, (numericScore)
+    ex de, hl                   ; de = numericScore
+    ld hl, (numericHighScore)   ; hl = numericHighScore
+    sbc hl, de                  ; numericHighScore - numericScore
+                                ; if c flag is set, then numericScore is new high score
+    jr nc, noNewHS
+noUpperBit:
+    ld (numericHighScore), de
 
     ld hl, score + 7
     ld a, (hl)
@@ -125,6 +121,6 @@ noNewHS:
 
 stringScore: defb 22,1,1,'scr:'
 score:  defb 22,1,5,'00000'
-stringHighScr: defb 22,1,20,'pScr:'
+stringHighScr: defb 22,1,20,'hScr:'
 highScore: defb 22,1,25,'00000'
 eostr:  equ $
