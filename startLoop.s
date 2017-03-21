@@ -23,16 +23,26 @@ startingLoop:
        	in a,(c)            ; see what keys are pressed.
        	rra                 ; outermost bit = key 1.
        	;push af             ; remember the value.
+       	jr c, multi_player_game_start        ; it's being pressed, move left.
+
+	jp init_game
+
+multi_player_game_start:
+	
+	ld bc,63486         ; keyboard row 1-5/joystick port 2.
+       	in a,(c)            ; see what keys are pressed.
+       	rra                 ; outermost bit = key 1.
+	rra			; key 2
+       	;push af             ; remember the value.
        	jr c, startingLoop        ; it's being pressed, move left.
 
 	jp init_game
 
-	
-	
 
 
 ;; Game loop
 include "gameLoop.s"
+;include "multiGameLoop.s"
 
 drawDINO:
 	ld hl, GameTitleDINO+1                      ; bc = address of sand char cell
