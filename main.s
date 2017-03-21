@@ -36,8 +36,9 @@ setupVideoUpdateList:
 	ld hl, videoUpdateList
 	ld (videoUpdateListCurr), hl		; set videoUpdateListCurr to point to beginning
 
-;; Game loop
-include "gameLoop.s"
+
+;; Starting loop
+include "startLoop.s"
 
 
 ;; This is the only thing called by the interrupt handler! We have X number of cycles to update video RAM
