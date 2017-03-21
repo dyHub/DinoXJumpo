@@ -75,12 +75,7 @@ resetScore:
 
 setHighScore:
 
-    ld hl, numericScore
-    ex de, hl
-    ld hl, numericHighScore
-    ld a, l
-    cp e
-    
+
     ld hl, (numericScore)
     ex de, hl                   ; de = numericScore
     ld hl, (numericHighScore)   ; hl = numericHighScore
@@ -126,6 +121,6 @@ noNewHS:
 
 stringScore: defb 22,1,1,'scr:'
 score:  defb 22,1,5,'00000'
-stringHighScr: defb 22,1,20,'pScr:'
+stringHighScr: defb 22,1,20,'hScr:'
 highScore: defb 22,1,25,'00000'
 eostr:  equ $
