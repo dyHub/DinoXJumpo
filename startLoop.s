@@ -36,13 +36,13 @@ multi_player_game_start:
        	;push af             ; remember the value.
        	jr c, startingLoop        ; it's being pressed, move left.
 
-	jp init_game
+	jp init_game_multi
 
 
 
 ;; Game loop
 include "gameLoop.s"
-;include "multiGameLoop.s"
+include "multiGameLoop.s"
 
 drawDINO:
 	ld hl, GameTitleDINO+1                      ; bc = address of sand char cell

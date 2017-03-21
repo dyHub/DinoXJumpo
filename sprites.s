@@ -19,6 +19,10 @@ trex2:      defb $08, $11,   2, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
 trex3:      defb $09, $10,   2, $FF, $7F, $3F, $1F, $0D, $0C, $08, $0C
 trex4:      defb $09, $11,   2, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 
+trex1_2:      defb $12, $10,   1, $00, $00, $00, $00, $00, $81, $83, $C7
+trex2_2:      defb $12, $11,   1, $7E, $DF, $FF, $FF, $F0, $FC, $E0, $E0
+trex3_2:      defb $13, $10,   1, $FF, $7F, $3F, $1F, $0D, $0E, $00, $00
+trex4_2:      defb $13, $11,   1, $F8, $E8, $E0, $C0, $80, $80, $80, $C0
 ;; trex fields -
 ;; is_jumping   = if he's jumping (1) or not (0)
 ;; up_or_down   = if jumping, then lets us know if he's going up (1) or down (0)
@@ -40,6 +44,25 @@ trex_color:         defb $06
 trex_color_f:	    defb $07
 trex_color_f_ctr:   defb $00
 
+
+;; Multi-player stuff
+trex_is_jumping1:    defb $00
+trex_up_or_down1:    defb $00
+trex_space_down1:    defb $00
+trex_jump_height1:   defb $06
+trex_run_f1:	    defb $04
+trex_run_f_ctr1:	    defb $00
+trex_f1:             defb $01
+trex_f_ctr1:         defb $00
+
+trex_is_jumping2:    defb $00
+trex_up_or_down2:    defb $00
+trex_space_down2:    defb $00
+trex_jump_height2:   defb $06
+trex_run_f2:	    defb $04
+trex_run_f_ctr2:	    defb $00
+trex_f2:             defb $01
+trex_f_ctr2:         defb $00
 ;; TREE SPRITES
 ;;
 ;; 
