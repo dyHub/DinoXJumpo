@@ -45,234 +45,236 @@ include "gameLoop.s"
 include "multiGameLoop.s"
 
 drawDINO:
+
+        ld bc, GameTitleDINO
+        ld (attrByteAddress), bc
+
 	ld hl, GameTitleDINO+1                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0708
+	ld hl, $0807
         ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        ld (attrByte), a
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+9                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0808
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+17                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0908
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+25                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0A08
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-	
-	ld hl, GameTitleDINO+33                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0B08
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+41                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0C08
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+49                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0D08
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+57                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0E08
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+65                      ; bc = address of sand char cell
-        ld (charCellAddress), hl
-	ld hl, $0709
-        ld (charCellCoord), hl
-        ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
-
-	ld hl, GameTitleDINO+73                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0809
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+25                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $080A
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+	
+	ld hl, GameTitleDINO+33                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $080B
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+41                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $080C
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+49                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $080D
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+57                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $080E
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+65                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $0907
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
+
+	ld hl, GameTitleDINO+73                      ; bc = address of sand char cell
+        ld (charCellAddress), hl
+	ld hl, $0908
+        ld (charCellCoord), hl
+        ld a, (GameTitleDINO)
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+81                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0909
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+89                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0A09
+	ld hl, $090a
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+97                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0B09
+	ld hl, $090b
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+105                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0C09
+	ld hl, $090c
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+113                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0D09
+	ld hl, $090d
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+121                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0E09
+	ld hl, $090e
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+129                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $070A
+	ld hl, $0a07
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+137                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $080A
+	ld hl, $0a08
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+145                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $090A
+	ld hl, $0a09
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+153                     ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0A0A
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+161                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0B0A
+	ld hl, $0a0b
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+169                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0C0A
+	ld hl, $0a0c
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+177                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0D0A
+	ld hl, $0a0d
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleDINO+185                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0E0A
+	ld hl, $0a0e
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ret
 
 drawGameX:
 	ld hl, GameTitleX+1                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $090B
+	ld hl, $0b09
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
         ld (attrByte), a
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+9                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0A0B
+	ld hl, $0b0a
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+17                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0B0B
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+25                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $090C
+	ld hl, $0c09
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 	
 	ld hl, GameTitleX+33                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0A0C
+	ld hl, $0c0a
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+41                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0B0C
+	ld hl, $0c0b
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+49                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $090D
+	ld hl, $0d09
         ld (charCellCoord), hl
         ld a, (GameTitleDINO)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+57                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0A0D
+	ld hl, $0d0a
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameTitleX+65                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0B0D
+	ld hl, $0d0b
         ld (charCellCoord), hl
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ret
 
@@ -280,256 +282,256 @@ drawGameX:
 drawJUMPO:
 	ld hl, GameJumpo+1                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0C0B
+	ld hl, $0b0c
         ld (charCellCoord), hl
         ld a, (GameJumpo)
         ld (attrByte), a
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+9                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0D0B
+	ld hl, $0b0d
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+17                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0E0B
+	ld hl, $0b0e
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+25                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0F0B
+	ld hl, $0b0f
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 	
 	ld hl, GameJumpo+33                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $100B
+	ld hl, $0B10
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+41                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $110B
+	ld hl, $0B11
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+49                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $120B
+	ld hl, $0B12
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+57                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $130B
+	ld hl, $0B13
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+65                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $140B
+	ld hl, $0B14
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+73                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $150B
+	ld hl, $0B15
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+81                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $160B
+	ld hl, $0B16
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+89                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $170B
+	ld hl, $0B17
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+97                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0C0C
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+105                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0D0C
+	ld hl, $0c0d
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+113                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0E0C
+	ld hl, $0c0e
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+121                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0F0C
+	ld hl, $0c0f
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+129                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $100C
+	ld hl, $0C10
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+137                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $110C
+	ld hl, $0C11
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+145                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $120C
+	ld hl, $0C12
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+153                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $130C
+	ld hl, $0C13
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+161                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $140C
+	ld hl, $0C14
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+169                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $150C
+	ld hl, $0C15
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+177                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $160C
+	ld hl, $0C16
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+185                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $170C
+	ld hl, $0C17
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+193                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0C0D
+	ld hl, $0d0c
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+201                      ; bc = address of sand char cell
         ld (charCellAddress), hl
 	ld hl, $0D0D
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+209                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0E0D
+	ld hl, $0d0e
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+217                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $0F0D
+	ld hl, $0d0f
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+225                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $100D
+	ld hl, $0D10
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+233                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $110D
+	ld hl, $0D11
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+241                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $120D
+	ld hl, $0D12
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+249                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $130D
+	ld hl, $0D13
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+257                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $140D
+	ld hl, $0D14
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+265                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $150D
+	ld hl, $0D15
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+273                      ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $160D
+	ld hl, $0D16
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 	ld hl, GameJumpo+281                     ; bc = address of sand char cell
         ld (charCellAddress), hl
-	ld hl, $170D
+	ld hl, $0D17
         ld (charCellCoord), hl
         ld a, (GameJumpo)
-        call copyCharCellAndAttrByteToUpdateList
+        call copyCharCellAndAttrByteToScreen
 
 
 	ret
