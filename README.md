@@ -1,15 +1,20 @@
 
-This is our ZX Spectrum project in which we are writing a game in z80 assembly.
+## Dino X Jumpo
 
-There are several files with routines which we are writing right now. These files end in .s and
-might have an example in them to try out.
+Created by:
+Yuhan Dai
+Kareem Moussa
+Nicolas Lama-Solet
 
-To compile a file named file.s and run it in FUSE:
+This game was inspired by Google Chrome's dinosaur jump game that shows up when you cannot connect to the WiFi.
+You can play this in single player and even multi-player mode (thanks to Yuhan)
+
+To play the game, you need the Fuse emulator. Once you have that, change the Makefile line
 ```
-make file 
+FUSE=<location of your fuse emulator binary>
 ```
 
-Make sure to not include the .s
+and then just run make main in the top-level directory, and you will be playing the game!
 
-
-You can read our progress reports in the Reports directory
+## Demo
+[![Dino X Jumpo Demo](http://img.youtube.com/vi/aKkyfjJW_jU/0.jpg)](https://www.youtube.com/watch?v=aKkyfjJW_jU)
