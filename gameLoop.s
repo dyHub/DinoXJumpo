@@ -10,6 +10,16 @@ init_game:
         ld hl, $0410
         ld (trex4), hl
 
+	;; running the left leg
+	ld a, $0E
+	ld (trex3+8), a
+
+	ld a, $00
+	ld (trex3+9), a
+
+	ld a, $00
+	ld (trex3+10), a
+
         ld hl, $02ff
         ld (cactus_rng), hl
 
