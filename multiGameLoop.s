@@ -187,12 +187,33 @@ gameLoop_endcheckjump2:
 	cp 0
 	jr z, GameOver2
 
+	call TrexCollision2
+	cp 0
+	jr z, GameOver3
+
 	ei
         halt                            ; wait for interrupt to print our shit
 
         jp multiGameLoop
 
 GameOver2:
+	ld a, 4
+	ld (lostString+1), a
+
+	ld a, 19
+	ld (winString+1), a
+	
+	jp gameISOVER
+
+GameOver3:
+	ld a, 4
+	ld (winString+1), a
+
+	ld a, 19
+	ld (lostString+1), a
+
+gameISOVER:
+	call showWinner
 	call deathNoise
 
 GameOver_loop2:
@@ -250,7 +271,19 @@ noise4x:
        	jr nz,noise3x
        	jr noise2x
 
+showWinner:
+	ld a,2              		; upper screen
+       	call 5633              		; open channel
+       	ld de,winString        	; address of string
+       	ld bc,eostr4-winString  	; length of string to print
+       	call 8252           		; print our string
+	ret
+
+
 include 'trex_player2.s'
 include 'trex_player1.s'
 include 'multiCollision.s'
 
+winString: defb 22,4,10,'You Win :)'
+lostString: defb 22,19,10,'You Lost :('
+eostr4:  equ $
